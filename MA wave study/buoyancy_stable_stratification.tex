@@ -1,0 +1,778 @@
+% \documentclass[10pt,letter]{article}
+% YN - March 8, 2012
+% YN - June 22, 2013
+
+\documentclass[12pt,psfig]{article}
+\usepackage{geometry}
+%\geometry{a4paper}
+\geometry{left=15mm,right=15mm,top=20mm,bottom=20mm}
+\usepackage{enumitem}
+\usepackage{mathrsfs}
+\usepackage{graphicx}
+\usepackage{amsmath,bm,amsfonts,amssymb}
+\usepackage{latexsym}
+\usepackage[hang]{subfigure}
+%\usepackage{balance}
+\usepackage{mathrsfs}
+\usepackage[compact]{titlesec}
+\usepackage{wasysym}
+\usepackage{longtable}
+%\titlespacing\section{0pt}{10pt plus 4pt minus 2pt}{10pt plus 2pt minus 2pt}
+%\titlespacing\subsection{0pt}{10pt plus 4pt minus 2pt}{10pt plus 2pt minus 2pt}
+%\titlespacing\subsubsection{0pt}{10pt plus 4pt minus 2pt}{10pt plus 2pt 	minus 2pt}
+% \titlespacing{\subsection}{10pt}{*0}{*0}
+%\titlespacing{\subsubsection}{10pt}{*0}{*0}
+\usepackage[small,it]{caption}
+\usepackage{mdwlist}
+%\usepackage{enumerate}
+\usepackage{wrapfig}
+\usepackage{tikz}
+\usepackage{varwidth}
+\usepackage{mathrsfs}
+\usetikzlibrary{shapes,arrows, trees}
+% \usepackage{ubuntu}
+% \usepackage{fontspec}
+% \usepackage{xunicode}
+% \usepackage{xltxtra}
+% \usepackage{mechanismalg}
+% \usepackage{algorithmic}
+% \usepackage{cancel}
+\usepackage{cleveref}
+\usepackage{setspace}
+\usepackage{color}
+\usepackage[numbers]{natbib}
+% \usepackage{hyperref}
+% \usepackage{authblk}
+% \usepackage{mathpazo}
+%\acmVolume{2}
+%\acmNumber{3}
+%\acmYear{01}
+%\acmMonth{09}
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}{Lemma}
+\newtheorem{corollary}{Corollary}
+\newtheorem{discussion}{Discussion}
+\newtheorem{definition}{Definition}
+\newtheorem{proposition}{Proposition}
+\newtheorem{mechanism}{Mechanism}
+
+\newcommand\numberthis{\addtocounter{equation}{1}\tag{\theequation}}
+\newcommand{\pf}{\textbf{Proof: }}
+\newcommand{\epf}{\hfill $\Box$}
+\newcommand{\etal}{{\it et al.}}
+\newcommand{\no}{\nonumber}
+\newcommand{\beq}{\begin{equation}}
+\newcommand{\eeq}{\end{equation}}
+\newcommand{\beqn}{\[}
+\newcommand{\eeqn}{\]}
+\newcommand{\bea}{\begin{eqnarray}}
+\newcommand{\eea}{\end{eqnarray}}
+\newcommand{\bean}{\begin{eqnarray*}}
+	\newcommand{\eean}{\end{eqnarray*}}
+\newcommand{\re}{\mbox{$\mathfrak{Re}$}}
+\newcommand{\bit}{\begin{itemize}}
+	\newcommand{\eit}{\end{itemize}}
+\newcommand{\ben}{\begin{enumerate}}
+	\newcommand{\een}{\end{enumerate}}
+\newcommand{\dham}{d_{\text{H}}}
+\allowdisplaybreaks
+\newcommand{\squishlisttwo}{
+	\begin{list}{$\bullet$}
+		{ \setlength{\itemsep}{0pt}
+			\setlength{\parsep}{0pt}
+			\setlength{\topsep}{0pt}
+			\setlength{\partopsep}{0pt}
+			\setlength{\leftmargin}{2em}
+			\setlength{\labelwidth}{1.5em}
+			\setlength{\labelsep}{0.5em} } }
+	
+	\newcommand{\squishend}{
+	\end{list} }
+	
+	\crefname{observation}{observation}{observations}
+	\crefname{algorithm}{algorithm}{algorithms}
+	\crefname{align}{equation}{equations}
+	\crefname{eqnarray}{equation}{equations}
+	
+	\def\QED{\mbox{\rule[0pt]{1ex}{1ex}}}
+	\def\Q{\hspace*{\fill}~\QED\par\endtrivlist\unskip}
+	
+	\newtheorem{question}{Question}
+	\DeclareMathOperator*{\argmax}{arg\,max}
+	\DeclareMathOperator*{\argmin}{arg\,min}
+	% Start the document
+\begin{document}
+% ******************************* Thesis Appendix B ********************************
+\section{Buoyant blob in the presence of magnetic field }
+Consider the case  $\bm  B_0=B_0 \ \bm e_z$ and $\boldsymbol{ g}=-g \ \textbf{\textit{e}}_z$ with an initial buoyant density perturbation $\theta_0 =  \text{exp}[-2(s^2+z^2)/\delta^2]$.
+
+\subsection{Governing equations}
+\begin{align}
+\dfrac{\partial \bm u}{\partial t}&=-\dfrac{\nabla p}{\rho}+\dfrac{\bm j \times \bm B_0}{\rho} -\alpha \theta \bm g+\nu\nabla^2\bm u, \label{u_eqn}\\
+\dfrac{\partial\bm \omega}{\partial t}&=\dfrac{1}{\rho}(\bm B_0\cdot \nabla)\bm j-\alpha\nabla\theta \times \bm g+\nu\nabla^2\bm \omega, \label{w_eqn}\\ 
+\dfrac{\partial \bm b}{\partial t}&=(\bm B_0\cdot \nabla)\bm u+\eta \nabla^2\bm b,\label{b_eqn} \\ 
+\dfrac{\partial \bm j}{\partial t}&=\dfrac{1}{\mu}(\bm B_0\cdot \nabla)\bm \omega+\eta \nabla^2\bm j.\label{j_eqn}, \\
+\dfrac{\partial  \theta}{\partial t}&=-\beta \bm u\ \cdot \bm e_z+\kappa \nabla^2\theta,\label{rho_eqn}
+\end{align}
+where $\beta=\partial T_0/\partial z$.
+
+\section{Velocity field solution}
+For axisymmetric flows,  the velocity can be written as the sum of azimuthal and poloidal velocities in $(s,\phi,z)$ cylindrical coordinates,
+\begin{align}
+\bm u= u_\phi \ \bm e_\phi + \nabla \times \left(\dfrac{\psi}{s} \bm e_\phi\right)=u_\phi \ \bm e_\phi-\dfrac{1}{s}\dfrac{\partial \psi}{\partial z}\bm e_s+\dfrac{1}{s}\dfrac{\partial \psi}{\partial s} \bm e_z. \label{u}
+\end{align} 
+The vorticity is defined as
+\begin{align}
+\bm \omega = \nabla \times \bm u =-\dfrac{\partial u_\phi}{\partial z} \bm e_s - \dfrac{\nabla_*^2\psi}{s} \bm e_\phi+\dfrac{1}{s}\dfrac{\partial (su_\phi)}{\partial s} \bm e_z, \label{w}
+\end{align}
+where $\nabla_*^2=\dfrac{\partial^2 }{\partial z^2}+s\dfrac{\partial}{\partial s}\left(\dfrac{1}{s}\dfrac{\partial }{\partial s}\right)$. Given that $\bm u(t=0)=\bm b(t=0)=0$ and $\bm g=-g \ \bm e_s$,  at subsequent times only poloidal components of velocity will be induced leading to $ u_\phi=0$. 
+Now, $\nabla_*^2(sf)$ can be written as
+\begin{align*}
+\nabla_*^2(sf)=s\Biggl[\dfrac{1}{s}\dfrac{\partial }{\partial s}\left(s\dfrac{\partial f}{\partial s}\right)+\dfrac{\partial^2f}{\partial z^2}-\dfrac{f}{s^2}\Biggr].
+\end{align*}
+Therefore, equations \eqref{w_eqn} and \eqref{j_eqn} can be written as
+\begin{align}
+\dfrac{\partial \omega_\phi}{\partial t}&=\dfrac{B_0}{\rho}\dfrac{\partial j_\phi}{\partial z}-\alpha g\dfrac{\partial \theta}{\partial s}+ \dfrac{\nu}{s}\nabla_*^2(s\omega_\phi)\label{w_eqn2}, \\
+\dfrac{\partial j_\phi}{\partial t}&=\dfrac{B_0}{\mu}\dfrac{\partial \omega_\phi}{\partial z}+ \dfrac{\eta}{s}\nabla_*^2(s j_\phi)\label{j_eqn2}.
+\end{align}
+Eliminating $j_\phi$ from \eqref{w_eqn2} using \eqref{j_eqn2} gives
+\begin{align*}
+\Biggl[\left(\dfrac{\partial }{\partial t}-\nu\nabla_*^2\right)\left(\dfrac{\partial }{\partial t}-\eta\nabla_*^2\right)-V_A^2\dfrac{\partial^2}{\partial z^2}\Biggr](s\omega_\phi)&=-\left(\dfrac{\partial }{\partial t}-\eta\nabla_*^2\right)g\alpha s\dfrac{\partial \theta}{\partial s}. 
+\end{align*}
+From \eqref{w}, $s\omega_\phi=-\nabla_*^2\psi$, this gives the 
+governing equation for $\psi$
+\begin{align*}
+\Biggl[\left(\dfrac{\partial }{\partial t}-\nu\nabla_*^2\right)\left(\dfrac{\partial }{\partial t}-\eta\nabla_*^2\right)-V_A^2\dfrac{\partial^2}{\partial z^2}\Biggr]\nabla_*^2\psi&=g\alpha\left(\dfrac{\partial }{\partial t}-\eta\nabla_*^2\right)\left(s\dfrac{\partial \theta}{\partial s}\right).
+\numberthis \label{psi_eqn} 
+\end{align*}
+\subsection{Solutions using Hankel-Fourier transform}
+Using the following Hankel-Fourier transforms and its properties,
+\begin{align*}
+\hat{\psi}(k_s,k_z)&=\dfrac{1}{2\pi^2}\int_{0}^{\infty}\int_{0}^{\infty}\psi(s,z) \ J_1(k_s s) \ e^{-ik_z z}\ ds \ dz, \\
+{\psi}(s,z)&=4\pi s \int_{0}^{\infty}\int_{0}^{\infty}\hat{\psi}(k_s,k_z) \ J_1(k_s s) \ e^{ik_z z}\ k_s \ dk_s \ dk_z,\\
+\hat{\theta}(k_s,k_z)&=\dfrac{1}{2\pi^2}\int_{0}^{\infty}\int_{0}^{\infty}\theta(s,z) \ J_0(k_s s) \ e^{-ik_z z} \ s \ ds \ dz, \\
+{\theta}(s,z)&=4\pi  \int_{0}^{\infty}\int_{0}^{\infty}\hat{\theta}(k_s,k_z) \ J_0(k_s s) \ e^{ik_z z}\ k_s \ dk_s \ dk_z,\\
+H_1\left\{\dfrac{\partial f(s)}{\partial s}\right\}&=-k_s \ H_0\left\{f(s)\right\},\\
+H_1\left\{\dfrac{\nabla^2_* (s f(s))}{s}\right\}&=-k^2H_1\left\{f(s)\right\},
+\end{align*}
+equation \eqref{psi_eqn} transforms to
+\begin{align*}
+\Biggl[\left(\dfrac{\partial }{\partial t}+\nu k^2\right)\left(\dfrac{\partial }{\partial t}+\eta k^2\right)+V_A^2k_z^2\Biggr]H_1\left\{\dfrac{\nabla^2_*\psi}{s}\right\}&=g\alpha\left(\dfrac{\partial }{\partial t}H_1\left\{\dfrac{\partial \theta}{\partial s}\right\}-H_1\left\{\dfrac{\eta}{s}\nabla_*^2\left(s\dfrac{\partial \theta}{\partial s}\right)\right\}\right),\\
+\Biggl[\left(\dfrac{\partial }{\partial t}+\nu k^2\right)\left(\dfrac{\partial }{\partial t}+\eta k^2\right)+V_A^2k_z^2\Biggr](-k^2\hat{\psi})&=g\alpha\dfrac{\partial}{\partial t}\left(-k_s\hat{\theta}\right)-g\alpha \eta\left(-k^2H_1\left\{\dfrac{\partial \theta}{\partial s}\right\}\right),\\
+\Biggl[\left(\dfrac{\partial }{\partial t}+\nu k^2\right)\left(\dfrac{\partial }{\partial t}+\eta k^2\right)+V_A^2k_z^2\Biggr]\hat{\psi}&=g\alpha\dfrac{ k_s}{k^2}\dfrac{\partial \hat{\theta}}{\partial t}+g\alpha\eta k_s\hat{\theta},\\
+\end{align*}
+Now, zeroth order Hankel-Fourier transform of \eqref{rho_eqn} gives
+\begin{align}
+\dfrac{\partial\hat{\theta}}{\partial t}=-\beta\hat{u}_z-\kappa k^2 \hat{\theta}.\label{drhohat_dt}
+\end{align}
+Using $\hat{u}_z=k_s\hat{\psi}$, this equation can be written as
+\begin{align}
+\hat{\theta}=-\left(\dfrac{\partial}{\partial t}+\kappa k^2\right)^{-1}\beta k_s \hat{\psi}. \label{rhohat}
+\end{align}
+Using \eqref{drhohat_dt},
+\begin{align*}
+\Biggl[\left(\dfrac{\partial }{\partial t}+\nu k^2\right)\left(\dfrac{\partial }{\partial t}+\eta k^2\right)+V_A^2k_z^2\Biggr]\hat{\psi}&=g\alpha\dfrac{ k_s}{k^2}\left(-\beta k_s\hat{\psi}-\kappa k^2\hat{\theta}\right)+g\alpha\eta k_s\hat{\theta},\\
+\Biggl[\left(\dfrac{\partial }{\partial t}+\nu k^2\right)\left(\dfrac{\partial }{\partial t}+\eta k^2\right)+V_A^2k_z^2+\dfrac{g \alpha \beta k_s^2}{k^2} \Biggr]\hat{\psi}&=g \alpha  k_s(\eta-\kappa) \hat{\theta}.
+\end{align*}
+Using \eqref{rhohat},
+\begin{align*}
+\Biggl[\left(\dfrac{\partial }{\partial t}+\nu k^2\right)\left(\dfrac{\partial }{\partial t}+\eta k^2\right)+V_A^2k_z^2+\dfrac{g \alpha \beta k_s^2}{k^2} \Biggr]\left(\dfrac{\partial}{\partial t}+\kappa k^2\right)\hat{\psi}&=-g \alpha  k_s^2(\eta-\kappa) \beta  \hat{\psi},\\
+\Biggl(\Biggl[\left(\dfrac{\partial }{\partial t}+\nu k^2\right)\left(\dfrac{\partial }{\partial t}+\eta k^2\right)+V_A^2k_z^2+\dfrac{g \alpha \beta k_s^2}{k^2} \Biggr]\left(\dfrac{\partial}{\partial t}+\kappa k^2\right)+g \alpha  k_s^2(\eta-\kappa) \beta \Biggr) \hat{\psi}&=0.\numberthis \label{psihat}
+\end{align*}
+Considering $\hat{\psi}\sim e^{\mathrm{i}\lambda t}$,
+\begin{align*}
+\Biggl[\left(\mathrm{i}\lambda+\nu k^2\right)\left(\mathrm{i}\lambda+\eta k^2\right)+V_A^2k_z^2+\dfrac{g \alpha \beta k_s^2}{k^2} \Biggr]\left(\mathrm{i}\lambda+\kappa k^2\right)+g \alpha  k_s^2(\eta-\kappa) \beta  &=0,\\
+\left(\mathrm{i}\lambda+\nu k^2\right)\left(\mathrm{i}\lambda+\eta k^2\right)\left(\mathrm{i}\lambda+\kappa k^2\right)+\left(V_A^2k_z^2+\dfrac{g \alpha \beta k_s^2}{k^2} \right)\left(\mathrm{i}\lambda+\kappa k^2\right)+g \alpha \beta \dfrac{k_s^2}{k^2}(\eta k^2-\kappa k^2)  &=0.
+\end{align*}
+Let $\omega_\nu=\nu k^2$, $\omega_\eta=\eta k^2$, $\omega_\kappa=\kappa k^2$, $\omega_M=V_A k_z$, $\omega_A^2=g\alpha \beta k_s^2/ k^2$ such that the dispersion relation equation becomes
+\begin{align*}
+\left(\mathrm{i}\lambda+\omega_\nu\right)\left(\mathrm{i}\lambda+\omega_\eta\right)\left(\mathrm{i}\lambda+\omega_\kappa\right)+\left(\omega_M^2+\omega_A^2 \right)\left(\mathrm{i}\lambda+\omega_\kappa\right)+\omega_A^2(\omega_\eta-\omega_\kappa) &=0.
+\end{align*}
+Using
+\begin{align*}
+L&=9 \omega_A^2 (2 \omega_\eta-4 \omega_\kappa-\omega_\nu)+2 \omega_\eta^3-3 \omega_\eta^2 (\omega_\kappa+\omega_\nu)-3 \omega_\eta \left(\omega_\kappa^2-4 \omega_\kappa \omega_\nu+3 \omega_M^2+\omega_\nu^2\right)\\
+&\mspace{20mu}+(\omega_\kappa+\omega_\nu) \left(2 \omega_\kappa^2-5 \omega_\kappa \omega_\nu-9 \omega_M^2+2 \omega_\nu^2\right),\\
+M&=3 \left(\omega_A^2+\omega_\eta (\omega_\kappa+\omega_\nu)+\omega_\kappa \omega_\nu+\omega_M^2\right)-(\omega_\eta+\omega_\kappa+\omega_\nu)^2,
+\end{align*}
+and solving for $\lambda$ gives
+\begin{align*}
+\lambda_1&=-\dfrac{1}{12} i \left(2^{2/3} \left(1-i \sqrt{3}\right) \sqrt[3]{\sqrt{L^2+4 M^3}+L}-\dfrac{2 i \sqrt[3]{2} \left(\sqrt{3}-i\right) M}{\sqrt[3]{\sqrt{L^2+4 M^3}+L}}-4 (\omega_\eta+\omega_\kappa+\omega_\nu)\right),\\
+\lambda_2&=-\dfrac{1}{12} i \left(2^{2/3} \left(1+i \sqrt{3}\right) \sqrt[3]{\sqrt{L^2+4 M^3}+L}+\dfrac{2 i \sqrt[3]{2} \left(\sqrt{3}+i\right) M}{\sqrt[3]{\sqrt{L^2+4 M^3}+L}}-4 (\omega_\eta+\omega_\kappa+\omega_\nu)\right),\\
+\lambda_3&=\dfrac{1}{6} i \left(2^{2/3} \sqrt[3]{\sqrt{L^2+4 M^3}+L}-\dfrac{2 \sqrt[3]{2} M}{\sqrt[3]{\sqrt{L^2+4 M^3}+L}}+2 (\omega_\eta+\omega_\kappa+\omega_\nu)\right).
+\end{align*}
+Using these three modes, the solution for $\hat{\psi}$ can be written as
+\begin{align*}
+\hat{\psi}=Ae^{\mathrm{i}\lambda_1t}+Be^{\mathrm{i}\lambda_2t}+Ce^{\mathrm{i}\lambda_3t},
+\end{align*}
+where the expressions for $A,B,C$ are obtained from
+\begin{align*}
+A+B+C&=\hat{\psi}_0=a_1=0,\\
+i(A\lambda_1+B\lambda_2+C\lambda_3)&=\dfrac{\partial \hat{\psi}}{\partial t}\bigg|_{t=0}=a_2,\\
+-(A\lambda_1^2+B\lambda_2^2+C\lambda_3^2)&=\dfrac{\partial^2 \hat{\psi}}{\partial t^2}\bigg|_{t=0}=a_3.
+\end{align*}
+The expressions for $A,B,C$ are
+\begin{align*}
+A&=-\dfrac{a_3-i a_2 (\lambda_2+ \lambda_3)}{(\lambda_1-\lambda_2) (\lambda_1-\lambda_3)},\\
+B&=-\dfrac{a_3-i a_2 (\lambda_1+ \lambda_3)}{(\lambda_2-\lambda_1) (\lambda_2-\lambda_3)},\\
+C&=-\dfrac{a_3-i a_2 (\lambda_1+ \lambda_2)}{(\lambda_3-\lambda_1) (\lambda_3-\lambda_2)}.
+\end{align*}
+The $\omega_\phi$ equation is
+\begin{align*}
+\dfrac{\partial \omega_\phi}{\partial t}=\dfrac{B_0}{\rho}\dfrac{\partial j_\phi}{\partial z}-\alpha g \dfrac{\partial \theta}{\partial s}+\dfrac{\nu}{s}\nabla^2_*(s\omega_\phi).
+\end{align*}
+Using $s\omega_\phi=-\nabla^2_*\psi$, the equation for $\psi$ is
+\begin{align}
+\left(\dfrac{\partial }{\partial t}-\nu\nabla^2_*\right)(-\nabla^2_*\psi)=\dfrac{B_0}{\rho}\dfrac{\partial (sj_\phi)}{\partial z}-\alpha g s\dfrac{\partial \theta}{\partial s}.\label{psi}
+\end{align}
+Evaluating this equation at $t=0$ using the initial conditions $\psi(t=0)=0$ and $j_\phi(t=0)=0$ gives
+\begin{align*}
+\dfrac{\partial \nabla^2_*\psi}{\partial t}\bigg|_{t=0}=\alpha g s\dfrac{\partial \theta_0}{\partial s}.
+\end{align*}
+The Hankel-Fourier transform of this equation gives
+\begin{align}
+\dfrac{\partial \hat{\psi}}{\partial t}\bigg|_{t=0}= \dfrac{\alpha g k_s\hat{\theta}_0}{k^2}=a_2. \label{dpsidt}
+\end{align}
+Now, the time derivative of \eqref{psi} gives
+\begin{align*}
+\left(\dfrac{\partial }{\partial t}-\nu\nabla^2_*\right)\dfrac{\partial \nabla^2_*\psi}{\partial t}=-\dfrac{B_0s}{\rho}\dfrac{\partial }{\partial z}\left(\dfrac{\partial j_\phi}{\partial t}\right)+\alpha g s\dfrac{\partial }{\partial s}\left(\dfrac{\partial \theta}{\partial t}\right).
+\end{align*}
+The Hankel-Fourier transform of this equation gives
+\begin{align*}
+	\left(\dfrac{\partial }{\partial t}+\nu k^2\right)\dfrac{\partial (-k^2\hat{\psi})}{\partial t}=-\dfrac{B_0 i k_z}{\rho}\dfrac{\partial \hat{j}_\phi}{\partial t}-\alpha g k_s\dfrac{\partial \hat{\theta}}{\partial t}.
+\end{align*}
+Evaluating this equation at $t=0$ gives
+\begin{align*}
+-k^2\dfrac{\partial^2\psi }{\partial t^2}\bigg|_{t=0}-\nu k^4\dfrac{\partial \hat{\psi}}{\partial t}\bigg|_{t=0}&=-\dfrac{B_0 i k_z}{\rho}\dfrac{\partial \hat{j}_\phi}{\partial t}\bigg|_{t=0}-\alpha g k_s\dfrac{\partial \hat{\theta}}{\partial t}\bigg|_{t=0},\\
+\dfrac{\partial^2\psi }{\partial t^2}\bigg|_{t=0}&=-\nu k^2\dfrac{\partial \hat{\psi}}{\partial t}\bigg|_{t=0}+\dfrac{B_0 i k_z}{\rho k^2}\dfrac{\partial \hat{j}_\phi}{\partial t}\bigg|_{t=0}+\dfrac{\alpha g k_s}{k^2}\dfrac{\partial \hat{\theta}}{\partial t}\bigg|_{t=0}.
+\end{align*}
+Since $j_\phi(t=0)=0$ and $\omega_\phi(t=0)=0$, $\dfrac{\partial \hat{j}_\phi}{\partial t}\bigg|_{t=0}=0$. Also, $\dfrac{\partial \hat{\theta}}{\partial t}\bigg|_{t=0}=-\kappa k^2\hat{\theta}_0$ and $\dfrac{\partial \hat{\psi}}{\partial t}\bigg|_{t=0}=\dfrac{\alpha gk_s\hat{\theta}_0}{k^2}$. Using these estimates, 
+\begin{align*}
+\dfrac{\partial^2\psi }{\partial t^2}\bigg|_{t=0}&=-\nu k^2\left(\dfrac{\alpha g k_s \hat{\theta}_0}{k^2}\right)+\dfrac{\alpha g k_s}{k^2}\left(-\kappa k^2\hat{\theta}_0\right),\\
+\dfrac{\partial^2\psi }{\partial t^2}\bigg|_{t=0}&=- \alpha g k_s (\nu+\kappa)\hat{\theta}_0=a_3.
+\end{align*}
+
+
+
+\section{Magnetic field solution}
+For axisymmetric flows,  the magnetic field can be written as the sum of azimuthal and poloidal fields in $(s,\phi,z)$ cylindrical coordinates,
+\begin{align}
+\bm b= b_\phi \ \bm e_\phi + \nabla \times \left(\dfrac{\Phi}{s} \bm e_\phi\right)=b_\phi \ \bm e_\phi-\dfrac{1}{s}\dfrac{\partial \Phi}{\partial z}\bm e_s+\dfrac{1}{s}\dfrac{\partial \Phi}{\partial s} \bm e_z, \label{b}
+\end{align} 
+where $\Phi$ is the flux stream function.
+The current density $\bm j$ is then
+\begin{align}
+\mu\bm j = \nabla \times \bm b =-\dfrac{\partial b_\phi}{\partial z} \bm e_s - \dfrac{\nabla_*^2\Phi}{s} \bm e_\phi+\dfrac{1}{s}\dfrac{\partial (sb_\phi)}{\partial s} \bm e_z, \label{j}
+\end{align}
+Now, equations the vorticity \eqref{w_eqn2} and current density \eqref{j_eqn2} are considered.
+\begin{align*}
+\dfrac{\partial \omega_\phi}{\partial t}&=\dfrac{B_0}{\rho}\dfrac{\partial j_\phi}{\partial z}-\alpha g\dfrac{\partial \theta}{\partial s}+ \dfrac{\nu}{s}\nabla_*^2(s\omega_\phi), \\
+\dfrac{\partial j_\phi}{\partial t}&=\dfrac{B_0}{\mu}\dfrac{\partial \omega_\phi}{\partial z}+ \dfrac{\eta}{s}\nabla_*^2(s j_\phi)\label.
+\end{align*}
+Eliminating $\omega_\phi$ from \eqref{j_eqn2} using \eqref{w_eqn2} gives
+\begin{align*}
+\Biggl[\left(\dfrac{\partial}{\partial t}-\nu\nabla^2_*\right)\left(\dfrac{\partial}{\partial t}-\eta\nabla^2_*\right)-V_A^2\dfrac{\partial^2}{\partial z^2}\Biggr]sj_\phi=-\dfrac{\alpha g  B_0 s}{\mu}\dfrac{\partial }{\partial z}\dfrac{\partial \theta}{\partial s}.
+\end{align*}
+Using $\mu s j_\phi=-\nabla^2_*\Phi$, 
+\begin{align*}
+\Biggl[\left(\dfrac{\partial}{\partial t}-\nu\nabla^2_*\right)\left(\dfrac{\partial}{\partial t}-\eta\nabla^2_*\right)-V_A^2\dfrac{\partial^2}{\partial z^2}\Biggr]\dfrac{\nabla^2_*\Phi}{s}=\alpha g B_0 \dfrac{\partial }{\partial z}\dfrac{\partial \theta}{\partial s}.
+\end{align*}
+Applying Hankel-Fourier transform gives
+\begin{equation}
+\Biggl[\left(\dfrac{\partial}{\partial t}+\nu k^2\right)\left(\dfrac{\partial}{\partial t}+\eta k^2\right)+V_A^2k_z^2\Biggr]\hat{\Phi}=\alpha g B_0 \mathrm{i}\dfrac{k_zk_s}{k^2}\hat{\theta}. \label{flux}
+\end{equation}
+Using \eqref{rhohat},
+\begin{align*}
+\hat{\theta}=-\left(\dfrac{\partial}{\partial t}+\kappa k^2\right)^{-1}\beta k_s \hat{\psi},
+\end{align*}
+equation \eqref{flux} becomes
+\begin{align}
+\Biggl[\left(\dfrac{\partial}{\partial t}+\nu k^2\right)\left(\dfrac{\partial}{\partial t}+\eta k^2\right)+V_A^2k_z^2\Biggr]\left(\dfrac{\partial}{\partial t}+\kappa k^2\right)\hat{\Phi}=- \dfrac{\alpha g\beta k_s^2}{k^2}\left(B_0 \mathrm{i} k_z\hat{\psi}\right). \label{flux2}
+\end{align}
+From \eqref{j_eqn2},
+\begin{align*}
+\Biggl(\dfrac{\partial }{\partial t}-\eta\nabla^2_*\Biggr)\mu sj_\phi&=B_0\dfrac{\partial s\omega_\phi}{\partial z}.
+\end{align*}
+Using $\mu s j_\phi=-\nabla^2_*\Phi$ and $s\omega_\phi=-\nabla^2_*\psi$, this equation becomes
+\begin{align*}
+\Biggl(\dfrac{\partial }{\partial t}-\eta\nabla^2_*\Biggr)\nabla^2_*\Phi&=B_0\dfrac{\partial \nabla^2_*\psi}{\partial z}.
+\end{align*}
+The Hankel-Fourier transform of this equation is
+\begin{align}
+\Biggl(\dfrac{\partial }{\partial t}+\eta k^2\Biggr)\hat{\Phi}&=B_0\mathrm{i}k_z\hat{\psi}. \label{phipsi}
+\end{align}
+Using \eqref{phipsi} in \eqref{flux2} gives
+\begin{align}
+\Biggl[\Biggl(\left(\dfrac{\partial}{\partial t}+\nu k^2\right)\left(\dfrac{\partial}{\partial t}+\eta k^2\right)+V_A^2k_z^2\Biggr)\left(\dfrac{\partial}{\partial t}+\kappa k^2\right)+ \dfrac{\alpha g\beta k_s^2}{k^2}\Biggl(\dfrac{\partial }{\partial t}+\eta k^2\Biggr)\Biggr]\hat{\Phi}=0. \label{flux3}
+\end{align}
+Considering plane wave form $\hat{\Phi}\sim e^{\mathrm{i}\lambda t}$, the dispersion equation is
+\begin{align*}
+\Biggl(\left(\mathrm{i}\lambda+\nu k^2\right)\left(\mathrm{i}\lambda+\eta k^2\right)+V_A^2k_z^2\Biggr)\left(\mathrm{i}\lambda+\kappa k^2\right)+ \dfrac{\alpha g\beta k_s^2}{k^2}\Biggl(\mathrm{i}\lambda+\eta k^2\Biggr)&=0,\\ 
+\left(\mathrm{i}\lambda+\omega_\nu\right)\left(\mathrm{i}\lambda+\omega_\eta\right)\left(\mathrm{i}\lambda+\omega_\kappa\right)+\omega_M^2\left(\mathrm{i}\lambda+\omega_\kappa\right)+ \omega_A^2(\mathrm{i}\lambda+\omega_\eta)&=0.
+\end{align*}
+Let
+\begin{align*}
+L_1
+&=9 \omega_A^2 (2 \omega_\eta-\omega_\kappa-\omega_\nu)+(\omega_\eta-2 \omega_\kappa+\omega_\nu) \left(2 \omega_\eta^2+\omega_\eta (\omega_\kappa-5 \omega_\nu)-\omega_\kappa^2+\omega_\kappa \omega_\nu-9 \omega_M^2+2 \omega_\nu^2\right),\\
+M_1&= 3 \left(\omega_A^2+\omega_\eta (\omega_\kappa+\omega_\nu)+\omega_\kappa \omega_\nu+\omega_M^2\right)-(\omega_\eta+\omega_\kappa+\omega_\nu)^2
+\end{align*}
+The three modes from this dispersion equation are
+\begin{align*}
+\lambda_1&=-\dfrac{1}{12} \mathrm{i} \left(2^{2/3} \left(1-\mathrm{i} \sqrt{3}\right) \sqrt[3]{\sqrt{L_1^2+4 M_1^3}+L_1}-\dfrac{2 \mathrm{i} \sqrt[3]{2} \left(\sqrt{3}-\mathrm{i}\right) M_1}{\sqrt[3]{\sqrt{L_1^2+4 M_1^3}+L_1}}-4 (\omega_\eta+\omega_\kappa+\omega_\nu)\right),\\
+\lambda_2&=-\dfrac{1}{12} \mathrm{i} \left(2^{2/3} \left(1+i \sqrt{3}\right) \sqrt[3]{\sqrt{L_1^2+4 M_1^3}+L_1}+\dfrac{2 \mathrm{i} \sqrt[3]{2} \left(\sqrt{3}+\mathrm{i}\right) M_1}{\sqrt[3]{\sqrt{L_1^2+4 M_1^3}+L_1}}-4 (\omega_\eta+\omega_\kappa+\omega_\nu)\right),\\
+\lambda_3&=\dfrac{1}{6} \mathrm{i} \left(2^{2/3} \sqrt[3]{\sqrt{L_1^2+4 M_1^3}+L_1}-\dfrac{2 \sqrt[3]{2} M_1}{\sqrt[3]{\sqrt{L_1^2+4 M_1^3}+L_1}}+2 (\omega_\eta+\omega_\kappa+\omega_\nu)\right)
+\end{align*}
+Using these three modes, $\hat{\Phi}$ is
+\begin{align}
+\hat{\Phi}=Pe^{\mathrm{i}\lambda_1t}+Qe^{\mathrm{i}\lambda_2t}+Re^{\mathrm{i}\lambda_3t},\label{flux_soln}
+\end{align}
+where the expressions for $P,Q,R$ are obtained from
+\begin{align*}
+P+Q+R&=\hat{\Phi}_0=b_1=0,\\
+i(P\lambda_1+Q\lambda_2+R\lambda_3)&=\dfrac{\partial \hat{\Phi}}{\partial t}\bigg|_{t=0}=b_2,\\
+-(P\lambda_1^2+Q\lambda_2^2+R\lambda_3^2)&=\dfrac{\partial^2 \hat{\Phi}}{\partial t^2}\bigg|_{t=0}=b_3.
+\end{align*}
+The expressions for $P,Q,R$ are
+\begin{align*}
+P&=-\dfrac{b_3-i b_2 (\lambda_2+ \lambda_3)}{(\lambda_1-\lambda_2) (\lambda_1-\lambda_3)},\\
+Q&=-\dfrac{b_3-i b_2 (\lambda_1+ \lambda_3)}{(\lambda_2-\lambda_1) (\lambda_2-\lambda_3)},\\
+R&=-\dfrac{b_3-i b_2 (\lambda_1+ \lambda_2)}{(\lambda_3-\lambda_1) (\lambda_3-\lambda_2)}.
+\end{align*}
+Now, evaluating \eqref{phipsi} at $t=0$ gives
+\begin{align}
+\dfrac{\partial \hat{\Phi}}{\partial t}\bigg|_{t=0}=b_2=0. \label{dPhidt}
+\end{align}
+Now, evaluating time derivative of \eqref{phipsi} at $t=0$ gives
+\begin{align*}
+\dfrac{\partial^2 \hat{\Phi}}{\partial t^2}\bigg|_{t=0}+\eta k^2\dfrac{\partial \hat{\Phi}}{\partial t}\bigg|_{t=0}&=B_0\mathrm{i}k_z\dfrac{\partial \hat{\psi}}{\partial t}\bigg|_{t=0}. 
+\end{align*}
+Using $a_2=\dfrac{\alpha g k_s \hat{\theta}_0}{k^2}$ from previous section,
+\begin{align}
+\dfrac{\partial^2 \hat{\Phi}}{\partial t^2}\bigg|_{t=0}&=\dfrac{\alpha g B_0\mathrm{i}k_zk_s \hat{\theta}_0}{k^2}=b_3. \label{d2Phidt2}
+\end{align}
+%\section{Undamped solutions}
+%Assuming $\nu=\kappa=\eta=0$, the governing equations for $\hat{\psi}$ and $\hat{\Phi}$ are
+%\begin{align*}
+%\left[\dfrac{\partial^2}{\partial t^2}+\omega_M^2+\omega_A^2\right](\hat{\psi},\hat{\Phi})&=0,\
+%\end{align*}
+%where $\omega_M=V_Ak_z$, $\omega_A=\dfrac{g\alpha\beta k_s^2}{k^2}$. Taking $\hat{\psi},\hat{\Phi}\sim e^{\mathrm{i}\lambda t}$, the dispersion equation is
+%\begin{align*}
+%\lambda^2-(\omega_M^2+\omega_A^2)=0.
+%\end{align*}
+%The dispersion relation for undamped waves is
+%\begin{align*}
+%\lambda_\pm=\pm\sqrt{\omega_A^2+\omega_M^2}.
+%\end{align*}
+%The solutions for $\hat{\psi}$ and $\hat{\Phi}$ are
+%\begin{align*}
+%\hat{\psi}=Ae^{\mathrm{i}\lambda_+t}+Be^{\mathrm{i}\lambda_-t}, \  \hat{\Phi}=P e^{\mathrm{i}\lambda_+t}+Qe^{\mathrm{i}\lambda_-t}.
+%\end{align*}
+%The expressions for $A,B$ are obtained from
+%\begin{align*}
+%A+B=0, \ \mathrm{i}\left(A\lambda_++B\lambda_-\right)=\left(\dfrac{\partial \hat{\psi}}{\partial t}\right)_{\!\!0}.
+%\end{align*}
+%Similarly $P,Q$ are obtained from
+%\begin{align*}
+%P+Q=0, \ -\left(P\lambda_+^2+Q\lambda_-^2\right)=\left(\dfrac{\partial^2 \hat{\Phi}}{\partial t^2}\right)_{\!\!0}.
+%\end{align*}
+%From \eqref{dpsidt} and \eqref{d2Phidt2},
+%\begin{align*}
+%\dfrac{\partial \hat{\psi}}{\partial t}\bigg|_{t=0}&= \dfrac{\alpha g k_s\hat{\theta}_0}{k^2}=a_2,\ \
+%\dfrac{\partial^2 \hat{\Phi}}{\partial t^2}\bigg|_{t=0}=\dfrac{\alpha g B_0\mathrm{i}k_zk_s \hat{\theta}_0}{k^2}=b_2.
+%\end{align*}
+%Solving these equations gives,
+%\begin{align*}
+%A=-\dfrac{\mathrm{i}a_2}{\lambda_+-\lambda_-},  \ B=\dfrac{\mathrm{i}a_2}{\lambda_+-\lambda_-}. \ C=
+%\end{align*}
+\section{Frequency approximation}
+\begin{itemize}
+\item Case 1: $\omega_A\gg \omega_M \gg \omega_\eta$
+
+For $\nu=\kappa=0$,
+\begin{align*}
+L&=9 \omega_A^2 (2 \omega_\eta)+2 \omega_\eta^3-3 \omega_\eta \left(3 \omega_M^2\right)\approx 18\omega_A^2\omega_\eta\left(1-\dfrac{\omega_M^2}{2\omega_A^2}+\dfrac{\omega_\eta^2}{9\omega_A^2}\right),\\
+M&=3 \left(\omega_A^2+\omega_M^2\right)-(\omega_\eta)^2\approx 3\omega_A^2\left(1+\dfrac{\omega_M^2}{\omega_A^2}-\dfrac{\omega_\eta^2}{3\omega_A^2}\right).
+\end{align*}
+Using this estimate, the approximate frequencies are
+\begin{align*}
+\lambda_1&=-\dfrac{1}{12} \mathrm{i} \left(2^{2/3} \left(1-\mathrm{i} \sqrt{3}\right) \sqrt[3]{\sqrt{L^2+4 M^3}+L}-\dfrac{2 \mathrm{i} \sqrt[3]{2} \left(\sqrt{3}-i\right) M}{\sqrt[3]{\sqrt{L^2+4 M^3}+L}}-4 \omega_\eta\right),\\
+&=-\dfrac{1}{12} \mathrm{i} \left(2^{2/3}P \left(1-\mathrm{i} \sqrt{3}\right) -\dfrac{2  \sqrt[3]{2}  M}{P}\left(1+\mathrm{i}\sqrt{3}\right)-4 \omega_\eta\right),\\
+&=-\dfrac{1}{12} \mathrm{i} \left(2^{2/3}P-\mathrm{i} \sqrt{3}\left(2^{2/3}P+\dfrac{2  \sqrt[3]{2}  M}{P}\right) -\dfrac{2  \sqrt[3]{2}  M}{P}-4 \omega_\eta\right),\\
+&= -\dfrac{\sqrt{3}}{12}\left(2^{2/3}P+\dfrac{2\sqrt[3]{2}M}{P}\right)+\dfrac{\mathrm{i}}{12}\left(4\omega_\eta-2^{2/3}P+\dfrac{2\sqrt[3]{2}M}{P}\right), \numberthis \label{l1decomp}
+\end{align*}
+where $P=\sqrt[3]{L+\sqrt{L^2+4M^3}}$. Now, the imaginary part of $\lambda_1$
+\begin{align*}
+\dfrac{1}{12}\left(4\omega_\eta-2^{2/3}P+\dfrac{2\sqrt[3]{2}M}{P}\right)&\approx \dfrac{\omega_\eta \omega_M^2 \left(\omega_A^4-\omega_A^2 \omega_M^2+\omega_M^4\right)}{2 \omega_A^6},\\
+-\dfrac{\sqrt{3}}{12}\left(2^{2/3}P+\dfrac{2\sqrt[3]{2}M}{P}\right)&\approx -\omega_A\left(1+\dfrac{\omega_M^2}{2\omega_A^2}\right).
+\end{align*}
+Hence, 
+\begin{align*}
+\lambda_1&\approx -\omega_A+\mathrm{i}\left(\dfrac{\omega_\eta \omega_M^2}{2 \omega_A^2}\left(1-\dfrac{ \omega_M^2}{\omega_A^2}+\dfrac{\omega_M^4}{\omega_A^4}\right)\right),\\
+\lambda_2&\approx \omega_A+\mathrm{i}\left(\dfrac{\omega_\eta \omega_M^2}{2 \omega_A^2}\left(1-\dfrac{ \omega_M^2}{\omega_A^2}+\dfrac{\omega_M^4}{\omega_A^4}\right)\right)
+\end{align*}
+Now, frequency $\lambda_3$ is
+\begin{align*}
+\lambda_3\approx \mathrm{i}\omega_\eta\left[1-\dfrac{\omega_M^2}{\omega_A^2}\right]
+\end{align*}
+\item Case 2: $\omega_M\sim \omega_A\gg \omega_\eta$
+For $\nu=\kappa=0$,
+\begin{align*}
+L&=9 \omega_A^2 (2 \omega_\eta)+2 \omega_\eta^3-3 \omega_\eta \left(3 \omega_M^2\right)\approx 18\omega_A^2\omega_\eta\left(1-\dfrac{\omega_M^2}{2\omega_A^2}+\dfrac{\omega_\eta^2}{9\omega_A^2}\right),\\
+M&=3 \left(\omega_A^2+\omega_M^2\right)-(\omega_\eta)^2\approx 3\omega_A^2\left(1+\dfrac{\omega_M^2}{\omega_A^2}-\dfrac{\omega_\eta^2}{3\omega_A^2}\right).
+\end{align*}
+\begin{align*}
+\Im\{\lambda_1\}&\approx \dfrac{1}{12}\left(4\omega_\eta-2^{2/3}P+\dfrac{2\sqrt[3]{2}M}{P}\right),\\
+&\approx \dfrac{\omega_\eta}{3}+\dfrac{\omega_\eta}{\omega_A} \left[-\dfrac{\omega_A}{12}+\dfrac{\omega_A}{4}  \left(\dfrac{\omega_M}{\omega_A}-1\right)-\dfrac{\omega_A}{8}  \left(\dfrac{\omega_M}{\omega_A}-1\right)^2\right],\\
+\Re\{\lambda_1\}&\approx -\dfrac{\sqrt{3}}{12}\left(2^{2/3}P+\dfrac{2\sqrt[3]{2}M}{P}\right),\\
+&\approx \left(-\sqrt{2} \omega_A-\dfrac{\omega_A (y-1)}{\sqrt{2}}-\dfrac{\omega_A (y-1)^2}{4 \sqrt{2}}\right)+x^2 \left(\dfrac{5 \omega_A}{32 \sqrt{2}}-\dfrac{\omega_A (y-1)}{64 \sqrt{2}}-\dfrac{35 \omega_A (y-1)^2}{256 \sqrt{2}}\right),
+\end{align*}
+where $x=\dfrac{\omega_\eta}{\omega_A}, \ y=\dfrac{\omega_M}{\omega_A}$.
+\item Case 3: $\omega_M\gg \omega_A \gg \omega_\eta$
+\begin{align*}
+L&=9 \omega_A^2 2 \omega_\eta+2 \omega_\eta^3-9 \omega_\eta  \omega_M^2\approx \left(\dfrac{2 \omega_A^2 }{ \omega_M^2}+\dfrac{2 \omega_\eta^2}{9 \omega_M^2}-1\right)9 \omega_\eta  \omega_M^2,\\
+M&=3 \left(\omega_A^2+\omega_M^2\right)-(\omega_\eta)^2\approx 3\omega_M^2\left(1+\dfrac{\omega_A^2}{\omega_M^2}-\dfrac{\omega_\eta^2}{3\omega_M^2}\right).
+\end{align*}
+\begin{align*}
+\Re\{\lambda_1\}\approx -\omega_M-\dfrac{\omega_A^2}{2\omega_M},\\
+\Im\{\lambda_1\}\approx  \dfrac{1}{2}\left(\omega_\eta-\dfrac{ \omega_\eta\omega_A^2}{\omega_M^2}\right)
+\end{align*}
+Similarly, 
+\begin{align*}
+\lambda_2\approx \omega_M+\dfrac{\omega_A^2}{2\omega_M}+\dfrac{\mathrm{i}}{2}\left(\omega_\eta-\dfrac{ \omega_\eta\omega_A^2}{\omega_M^2}\right)
+\end{align*}
+Now, frequency $\lambda_3$ is
+\begin{align*}
+\lambda_3=\dfrac{\mathrm{i}}{6}\left(2^{2/3}P-\dfrac{2^{4/3}M}{P}+2\omega_\eta\right)\approx  \mathrm{i} \dfrac{\omega_\eta\omega_A^2}{\omega_M^2}
+\end{align*}
+\end{itemize}
+
+\section{Approximate energy estimates for $t_A\ll t_M\ll t_\eta$ case}
+\subsection{Kinetic energy}
+The three modes $\lambda_i: i=1,2,3$ takes the form
+\begin{align*}
+\lambda_1&\approx -\omega_A+\mathrm{i}\left(\dfrac{\omega_\eta \omega_M^2}{2 \omega_A^2}\left(1-\dfrac{ \omega_M^2}{\omega_A^2}+\dfrac{\omega_M^4}{\omega_A^4}\right)\right),\\
+\lambda_2&\approx \omega_A+\mathrm{i}\left(\dfrac{\omega_\eta \omega_M^2}{2 \omega_A^2}\left(1-\dfrac{ \omega_M^2}{\omega_A^2}+\dfrac{\omega_M^4}{\omega_A^4}\right)\right),\\
+\lambda_3&\approx \mathrm{i}\omega_\eta\left[1-\dfrac{\omega_M^2}{\omega_A^2}\right]
+\end{align*}
+For $\nu=\kappa=0$, $a_3=-\alpha g k_s(\nu+\kappa)\hat{\theta}_0=0, \ a_2=\dfrac{\alpha g k_s \hat{\theta}_0}{k^2}=\omega_A^2\dfrac{\hat{\theta}_0}{\beta k_s}$. 
+\subsubsection{$\hat{\psi}$ approximation}
+$$\hat{\psi}=Ae^{\mathrm{i}\lambda_1 t}+Be^{\mathrm{i}\lambda_2 t}+Ce^{\mathrm{i}\lambda_3 t},$$ where
+\begin{align*}
+A&=-\dfrac{a_3-i a_2 (\lambda_2+ \lambda_3)}{(\lambda_1-\lambda_2) (\lambda_1-\lambda_3)},\\
+B&=-\dfrac{a_3-i a_2 (\lambda_1+ \lambda_3)}{(\lambda_2-\lambda_1) (\lambda_2-\lambda_3)},\\
+C&=-\dfrac{a_3-i a_2 (\lambda_1+ \lambda_2)}{(\lambda_3-\lambda_1) (\lambda_3-\lambda_2)}.
+\end{align*}
+Now, using the approximate frequency estimates
+\begin{align*}
+A&\approx \mathrm{i}a_2\dfrac{\omega_A+\mathrm{i}\omega_\eta }{2 \omega_A( \omega_A+\mathrm{i} \omega_\eta )}=\mathrm{i}\dfrac{a_2}{2 \omega_A}=\mathrm{i}\dfrac{\omega_A}{2 }\dfrac{\hat{\theta}_0}{\beta k_s},\\
+B&\approx \mathrm{i}a_2\dfrac{-\omega_A+\mathrm{i}\omega_\eta \left(\dfrac{ \omega_M^2}{2 \omega_A^2}+1\right)}{2 \omega_A^2+\mathrm{i}2 \omega_A \omega_\eta \left(\dfrac{\omega_M^2}{2 \omega_A^2}-1\right)}\approx -\mathrm{i}\dfrac{a_2}{2\omega_A}\left(\dfrac{-\omega_A+\mathrm{i}\omega_\eta }{-\omega_A+\mathrm{i} \omega_\eta }\right)=-\mathrm{i}\dfrac{\omega_A}{2}\dfrac{\hat{\theta}_0}{\beta k_s},\\
+C&\approx \mathrm{i}a_2\dfrac{\dfrac{\mathrm{i} \omega_\eta \omega_M^2}{\omega_A^2}}{\omega_\eta^2 \left(-\dfrac{\omega_M^4}{4 \omega_A^4}+\dfrac{\omega_M^2}{\omega_A^2}-1\right)-\omega_A^2}\approx a_2\dfrac{ \omega_\eta \omega_M^2}{\omega_A^4}=\dfrac{ \omega_\eta \omega_M^2}{\omega_A^2}\dfrac{\hat{\theta}_0}{\beta k_s}
+\end{align*}
+Therefore,
+\begin{align*}
+\hat{\psi}&\approx \Biggl[\mathrm{i}\dfrac{\omega_A}{2} \exp\left(-\dfrac{\omega_\eta\omega_M^2}{2\omega_A^2}t\right)\left(e^{-\mathrm{i}\omega_A t}-e^{\mathrm{i}\omega_A t}\right)+\dfrac{\omega_\eta\omega_M^2}{\omega_A^2}e^{-\omega_\eta t}\Biggr]\dfrac{\hat{\theta}_0}{\beta k_s},\\
+&\approx \Biggl[\mathrm{i}\dfrac{\omega_A}{2} \exp\left(-\dfrac{\omega_\eta\omega_M^2}{2\omega_A^2}t\right)\left(-2\mathrm{i}\sin(\omega_A t)\right)+\dfrac{\omega_\eta\omega_M^2}{\omega_A^2}e^{-\omega_\eta t}\Biggr]\dfrac{\hat{\theta}_0}{\beta k_s},\\
+\hat{\psi}&\approx \Biggl[\omega_A \exp\left(-\dfrac{\omega_\eta\omega_M^2}{2\omega_A^2}t\right)\sin(\omega_A t)+\dfrac{\omega_\eta\omega_M^2}{\omega_A^2}e^{-\omega_\eta t}\Biggr]\dfrac{\hat{\theta}_0}{\beta k_s}.
+\end{align*}
+Since $\omega_M\ll \omega_A$, the magnitude of second term that decays on a timescale $\omega_\eta^{-1}$ would be weaker than the first term. Therefore the total energy of the system would be dominated by the first term. This gives
+\begin{align}
+\hat{\psi}&\approx \omega_A \exp\left(-\dfrac{\omega_\eta\omega_M^2}{2\omega_A^2}t\right)\sin(\omega_A t)\dfrac{\hat{\theta}_0}{\beta k_s}.\label{psia}
+\end{align}
+From \eqref{psia}, the velocity estimates are
+\begin{align}
+\hat{u}_s&\approx -\mathrm{i}k_z \omega_A \exp\left(-\dfrac{\omega_\eta\omega_M^2}{2\omega_A^2}t\right)\sin(\omega_A t)\dfrac{\hat{\theta}_0}{\beta k_s},\label{uhatsapprox}\\
+\hat{u}_z&\approx k_s \omega_A \exp\left(-\dfrac{\omega_\eta\omega_M^2}{2\omega_A^2}t\right)\sin(\omega_A t)\dfrac{\hat{\theta}_0}{\beta k_s}\label{uhatzapprox}.
+\end{align}
+\subsubsection{$\hat{u}_s$ approximate energy estimates}
+The velocity field for $t_A\ll t_M \ll t_\eta$ case is
+\begin{align*}
+\hat{u}_s&\approx -\mathrm{i}k_z \omega_A \exp\left(-\dfrac{\omega_\eta\omega_M^2}{2\omega_A^2}t\right)\sin(\omega_A t)\dfrac{\hat{\theta}_0}{\beta k_s}.
+\end{align*}
+For $t\ll \omega_A^{-1}$, the velocity is
+\begin{align*}
+\hat{u}_s\approx -\mathrm{i}k_z\omega_A\sin(\omega_A t)\dfrac{\hat{\theta}_0}{\beta k_s}.
+\end{align*}
+The energy content in this velocity field is
+\begin{align*}
+E_{s}&= 16\pi^4\int_{0}^{\infty}\int_{0}^{\infty}|\hat{u}_s|^2 \ k_s \ dk_s \ dk_z, \\
+&\approx 16\pi^4\int_{0}^{\infty}\int_{0}^{\infty}\left(k_z\omega_A\sin(\omega_A t)\dfrac{\hat{\theta}_0}{\beta k_s}\right)^2 \ k_s \ dk_s \ dk_z, \\
+&\approx 16\pi^4\int_{0}^{\infty}\int_{0}^{\infty}k_z^2\omega_A^2\sin^2(\omega_A t)\dfrac{\hat{\theta}^2_0}{\beta^2 k_s^2} \ k_s \ dk_s \ dk_z, \\
+&\approx 16\pi^4\dfrac{\delta^6}{16^2\cdot 2\pi^3}\dfrac{g\alpha}{\beta }\int_{0}^{\infty}\int_{0}^{\infty}\dfrac{k_sk_z^2}{k^2}\sin^2(\omega_A t)e^{(-k^2\delta^2/4)} \ dk_s \ dk_z, \\
+\text{Using}& \ k_s=k\cos\theta, k_z=k\sin\theta,\\
+&\approx 16\pi^4\dfrac{\delta^6}{16^2\cdot 2\pi^3}\dfrac{g\alpha}{\beta }\int_{0}^{\infty}k^2\ e^{(-k^2\delta^2/4)}  \ dk \ \int_{0}^{\pi/2}\cos\theta \sin^2\theta\sin^2(\sqrt{g\alpha\beta}\cos\theta t) \ d\theta, \\
+&\approx 16\pi^4\dfrac{\delta^6}{16^2\cdot 2\pi^3}\dfrac{g\alpha}{\beta }\times \dfrac{2\sqrt{\pi}}{\delta^3}\times \dfrac{\pi  \pmb{H}_2(2 \sqrt{g\alpha\beta} t)}{8 \sqrt{g\alpha\beta} t}. \\
+&\approx \dfrac{\pi^{5/2}\delta^3}{64}\dfrac{\sqrt{g\alpha}}{\beta }\times \dfrac{ \pmb{H}_2(2 \sqrt{g\alpha\beta} t)}{ \sqrt{\beta} t},
+\end{align*}
+where $\pmb{H}_2(x)$ is the Struve function.
+For $t\sim O(\omega_A^{-1})$, the velocity field is
+\begin{align*}
+\hat{u}_s\approx -\mathrm{i}k_z\omega_A\dfrac{\hat{\theta}_0}{\beta k_s}.
+\end{align*}
+The energy content associated with this field is
+\begin{align*}
+E_{s}&= 16\pi^4\int_{0}^{\infty}\int_{0}^{\infty}|\hat{u}_s|^2 \ k_s \ dk_s \ dk_z, \\
+&\approx 16\pi^4\int_{0}^{\infty}\int_{0}^{\infty}\left(k_z\omega_A\dfrac{\hat{\theta}_0}{\beta k_s}\right)^2 \ k_s \ dk_s \ dk_z, \\
+&\approx 16\pi^4\dfrac{\delta^6}{16^2\cdot 2\pi^3}\dfrac{g\alpha}{\beta }\int_{0}^{\infty}\int_{0}^{\infty}\dfrac{k_sk_z^2}{k^2}e^{(-k^2\delta^2/4)} \ dk_s \ dk_z, \\
+\text{Using}& \ k_s=k\cos\theta, k_z=k\sin\theta,\\
+&\approx 16\pi^4\dfrac{\delta^6}{16^2\cdot 2\pi^3}\dfrac{g\alpha}{\beta }\int_{0}^{\infty}k^2\ e^{(-k^2\delta^2/4)}  \ dk \ \int_{0}^{\pi/2}\cos\theta \sin^2\theta \ d\theta, \\
+&\approx 16\pi^4\dfrac{\delta^6}{16^2\cdot 2\pi^3}\dfrac{g\alpha}{\beta }\times \dfrac{2\sqrt{\pi}}{\delta^3}\times \dfrac{1}{3}, \\
+E_s&\approx \dfrac{\pi^{3/2}\delta^3}{48}\dfrac{g\alpha}{\beta }.
+\end{align*}
+For $t\gtrsim O(\omega_A^2/\omega_\eta\omega_M^2)$, the velocity field is
+\begin{align*}
+\hat{u}_s\approx -\mathrm{i}k_z\omega_A\exp\left(-\dfrac{\omega_\eta\omega_M^2}{2\omega_A^2}t\right)\dfrac{\hat{\theta}_0}{\beta k_s}.
+\end{align*}
+The energy associated with this field is
+\begin{align*}
+E_{s}&= 16\pi^4\int_{0}^{\infty}\int_{0}^{\infty}|\hat{u}_s|^2 \ k_s \ dk_s \ dk_z, \\
+&\approx 16\pi^4\int_{0}^{\infty}\int_{0}^{\infty}\left(k_z\omega_A\exp\left(-\dfrac{\omega_\eta\omega_M^2}{2\omega_A^2}t\right)\dfrac{\hat{\theta}_0}{\beta k_s}\right)^2 \ k_s \ dk_s \ dk_z, \\
+&\approx 16\pi^4\int_{0}^{\infty}\int_{0}^{\infty}k_z^2\omega_A^2\exp\left(-\dfrac{\omega_\eta\omega_M^2}{\omega_A^2}t\right)\dfrac{\hat{\theta}^2_0}{\beta^2 k_s^2} \ k_s \ dk_s \ dk_z, \\
+&\approx 16\pi^4\dfrac{\delta^6}{16^2\cdot 2\pi^3}\dfrac{g\alpha}{\beta }\int_{0}^{\infty}\int_{0}^{\infty}\dfrac{k_sk_z^2}{k^2}e^{(-k^2\delta^2/4)}\exp\left(-\dfrac{\eta V_A^2}{g\alpha\beta}\dfrac{k^4k_z^2}{k_s^2}t\right) \ dk_s \ dk_z, \\
+\text{Using}& \ k_s=k\cos\theta, k_z=k\sin\theta,\\
+&\approx 16\pi^4\dfrac{\delta^6}{16^2\cdot 2\pi^3}\dfrac{g\alpha}{\beta }\int_{0}^{\infty}\int_{0}^{\pi/2}\dfrac{k\cos\theta k^2\sin^2\theta}{k^2}e^{(-k^2\delta^2/4)}\exp\left(-\dfrac{\eta V_A^2}{g\alpha\beta}\dfrac{k^4k^2\sin^2\theta}{k^2\cos^2\theta}t\right) \ k \ dk \ d\theta, \\
+&\approx 16\pi^4\dfrac{\delta^6}{16^2\cdot 2\pi^3}\dfrac{g\alpha}{\beta } \int_{0}^{\pi/2}\cos\theta \sin^2\theta \int_{0}^{\infty}k^2 \ e^{(-k^2\delta^2/4)} \ \exp\left(-\dfrac{\eta V_A^2}{g\alpha\beta}k^4\tan^2\theta t\right) \ dk \ d\theta, \\
+\end{align*}
+Let $a=\dfrac{\delta^2}{4}$ and $b=\dfrac{\eta V_A^2\tan^2\theta t}{g\alpha\beta}$ such that
+\begin{align*}
+E_s&\approx 16\pi^4\dfrac{\delta^6}{16^2\cdot 2\pi^3}\dfrac{g\alpha}{\beta } \int_{0}^{\pi/2}\cos\theta \sin^2\theta \int_{0}^{\infty}k^2 \ e^{(-ak^2-b k^4)}  \ dk \ d\theta.
+\end{align*}
+Now, the integral 
+\begin{align*}
+I_A=\int_{0}^{\infty} k^2 \ e^{-ak^2-b k^4} \ dk,
+\end{align*}
+is evaluated. From 3.469 in Gradshteyn and Ryzhik (2007), 
+\begin{align*}
+I=\int_{0}^{\infty}e^{-\mu x^4-2\nu x^2} \ dx=\dfrac{1}{4}\sqrt{\dfrac{2\nu}{\mu}}\exp\left(\dfrac{\nu^2}{2\mu}\right)K_{1/4}\left(\dfrac{\nu^2}{2\mu}\right).
+\end{align*}
+Substituting $\mu=b$ and $\nu=a/2$, the integral becomes
+\begin{align*}
+I=\int_{0}^{\infty}e^{-ax^2-bx^4} \ dx=\dfrac{1}{4}\sqrt{\dfrac{a}{b}}\exp\left(\dfrac{a^2}{8b}\right)K_{1/4}\left(\dfrac{a^2}{8b}\right).
+\end{align*} 
+Now, using the Leibniz rule,
+\begin{align*}
+I_A=-\dfrac{\partial I}{\partial a}&=\int_{0}^{\infty}x^2 e^{-ax^2-b x^4} \ dx,\\ &=\dfrac{e^{a^2/8b}}{32 b^2}\sqrt{\dfrac{b}{a}}\left(a^2 K_{5/4}\left(\dfrac{a^2}{8 b}\right)+a^2 K_{-3/4}\left(\dfrac{a^2}{8 b}\right)-2 \left(a^2+2 b\right) K_{1/4}\left(\dfrac{a^2}{8 b}\right)\right).
+\end{align*}
+Using the identity $K_{-\nu}(X)=K_{\nu}(X)$, this integral can be written as
+\begin{align*}
+I_A=\dfrac{e^{a^2/8b}}{32 b^2}\sqrt{\dfrac{b}{a}}\left(a^2 K_{5/4}\left(\dfrac{a^2}{8 b}\right)+a^2 K_{3/4}\left(\dfrac{a^2}{8 b}\right)-2 \left(a^2+2 b\right) K_{1/4}\left(\dfrac{a^2}{8 b}\right)\right).
+\end{align*}
+For $t\gg \omega_A^2/\omega_\eta\omega_M^2$, taking $b\rightarrow\infty$, the integral $I_A$ becomes
+\begin{align}
+I_A\approx b^{-3/4} \left(\dfrac{\Gamma \left(3/4\right)}{8}-\dfrac{\Gamma \left(-1/4\right)}{32}\right)+O\left(b^{-5/4}\right) \label{IAapprox}
+\end{align}
+Using \eqref{IAapprox} $E_s$, becomes
+\begin{align*}
+E_s&\approx \dfrac{\pi\delta^6}{32}\dfrac{g\alpha}{\beta } \left(\dfrac{\Gamma \left(3/4\right)}{8}-\dfrac{\Gamma \left(-1/4\right)}{32}\right)\int_{0}^{\pi/2}\cos\theta \sin^2\theta \left(\dfrac{\eta V_A^2 \tan^2\theta}{g\alpha\beta}t\right)^{-3/4}  d\theta,\\
+&\approx \dfrac{\pi\delta^6}{32}\dfrac{g\alpha}{\beta } \left(\dfrac{\Gamma \left(3/4\right)}{8}-\dfrac{\Gamma \left(-1/4\right)}{32}\right)\left(\dfrac{\eta V_A^2}{g\alpha\beta}t\right)^{-3/4}\int_{0}^{\pi/2}\cos\theta \sin^2\theta \left(\tan^2\theta\right)^{-3/4}  d\theta,\\
+&\approx \dfrac{\pi\delta^6}{32}\dfrac{g\alpha}{\beta } \left(\dfrac{\Gamma \left(3/4\right)}{8}-\dfrac{\Gamma \left(-1/4\right)}{32}\right)\left(\dfrac{\eta V_A^2}{g\alpha\beta}t\right)^{-3/4}\times\dfrac{2 \Gamma \left(3/4\right) \Gamma \left(7/4\right)}{3 \sqrt{\pi }},\\
+&\approx \dfrac{\sqrt{\pi}\delta^6}{48}\dfrac{g\alpha}{\beta} \left(\dfrac{\Gamma \left(3/4\right)}{8}-\dfrac{\Gamma \left(-1/4\right)}{32}\right)\Gamma \left(3/4\right)\Gamma \left(7/4\right)\left(\dfrac{\eta V_A^2}{\delta^4}\dfrac{\delta^4}{g\alpha\beta}t\right)^{-3/4},\\
+&\approx \dfrac{\sqrt{\pi}\delta^3}{48}\dfrac{g\alpha}{\beta} \left(\dfrac{\Gamma \left(3/4\right)}{8}-\dfrac{\Gamma \left(-1/4\right)}{32}\right)\Gamma \left(3/4\right)\Gamma \left(7/4\right)\left(\dfrac{ t_A^2}{t_\eta t_M^2}t\right)^{-3/4},\\
+E_s&\approx \dfrac{\sqrt{\pi}\delta^3}{48}\dfrac{g\alpha}{\beta} \left(\dfrac{\Gamma \left(3/4\right)}{8}-\dfrac{\Gamma \left(-1/4\right)}{32}\right)\Gamma \left(3/4\right)\Gamma \left(7/4\right)\left(\dfrac{t}{t_{u_s}}\right)^{-3/4}, \numberthis \label{Eus34}
+\end{align*}
+where $t_{u_s}=t_\eta t_M^2/t_A^2$ with $t_A=1/\sqrt{g\alpha\beta}, t_M=\delta/V_A, t_\eta=\delta^2/\eta$.
+\subsubsection{$\hat{u}_z$ approximate energy estimates}
+From \eqref{uhatzapprox}, 
+\begin{align*}
+\hat{u}_z&\approx k_s \omega_A \exp\left(-\dfrac{\omega_\eta\omega_M^2}{2\omega_A^2}t\right)\sin(\omega_A t)\dfrac{\hat{\theta}_0}{\beta k_s}.
+\end{align*}
+For $t\ll O(\omega_A^{-1})$, the velocity is
+\begin{align*}
+\hat{u}_z\approx k_s \omega_A \sin(\omega_A t)\dfrac{\hat{\theta}_0}{\beta k_s}.
+\end{align*}
+The energy content in this field is
+\begin{align*}
+E_z&=16\pi^4\int_{0}^{\infty}\int_{0}^{\infty}|\hat{u}_z|^2 \ k_s \ dk_s \ dk_z,\\
+&\approx 16\pi^4\int_{0}^{\infty}\int_{0}^{\infty}\left(k_s \omega_A \sin(\omega_A t)\dfrac{\hat{\theta}_0}{\beta k_s}\right)^2 \ k_s \ dk_s \ dk_z,\\
+&\approx 16\pi^4\dfrac{\delta^6}{16^2\cdot 2 \pi^3}\int_{0}^{\infty}\int_{0}^{\infty} \omega_A^2 \sin^2(\omega_A t)\dfrac{e^{-k^2\delta^2/4}}{\beta^2} \ k_s \ dk_s \ dk_z,\\
+&\approx 16\pi^4\dfrac{\delta^6}{16^2\cdot 2 \pi^3}\int_{0}^{\infty}\int_{0}^{\infty} \dfrac{g\alpha k_s^3}{k^2} \sin^2\left( \dfrac{\sqrt{g\alpha\beta} k_s}{k}t\right)\dfrac{e^{-k^2\delta^2/4}}{\beta} \ dk_s \ dk_z,\\
+\text{Using}& \ k_s=k\cos\theta, \ k_z=k\sin\theta,\\
+&\approx \dfrac{\pi\delta^6}{64 }\dfrac{g\alpha}{\beta}\int_{0}^{\infty}k^2 \ e^{-k^2\delta^2/4} \   dk\int_{0}^{\pi/2} \cos^3\theta \sin^2\left( \sqrt{g\alpha\beta}\cos\theta t\right)  \ d\theta,\\
+&\approx \dfrac{\pi\delta^6}{64 }\dfrac{g\alpha}{\beta}\times \dfrac{2 \sqrt{\pi }}{\delta^3} \times \dfrac{\pi}{8}   \left(2 \pmb{H}_1(2 \sqrt{g\alpha\beta} t)-\dfrac{\pmb{H}_2(2 \sqrt{g\alpha\beta} t)}{\sqrt{g\alpha\beta} t}\right),\\
+E_z&\approx \dfrac{\pi^{5/2}\delta^3}{128}\dfrac{g\alpha}{\beta}\times   \left( \pmb{H}_1(2 \sqrt{g\alpha\beta} t)-\dfrac{\pmb{H}_2(2 \sqrt{g\alpha\beta} t)}{2\sqrt{g\alpha\beta} t}\right). \numberthis \label{Ezstruve}
+\end{align*}
+For $t\gtrsim O(\omega_A)$, the velocity field is
+\begin{align*}
+\hat{u}_z\approx k_s \omega_A \dfrac{\hat{\theta}_0}{\beta k_s}.
+\end{align*}
+The energy associated with this field is
+\begin{align*}
+E_z&\approx 16\pi^4\int_{0}^{\infty}\int_{0}^{\infty}|\hat{u}_z|^2 \ k_s \ dk_s \ dk_z, \\
+&\approx 16\pi^4\int_{0}^{\infty}\int_{0}^{\infty}k_s^2 \omega_A^2 \dfrac{\hat{\theta}_0^2}{\beta^2 k_s^2} \ k_s \ dk_s \ dk_z, \\
+&\approx \dfrac{\pi\delta^6}{64 }\dfrac{g\alpha}{\beta}\int_{0}^{\infty}\int_{0}^{\infty}\dfrac{ k_s^3}{k^2}e^{-k^2\delta^2/4} \ dk_s \ dk_z, \\
+\text{Using}& k_s=k\cos\theta, \ k_z=k\sin\theta,\\
+&\approx \dfrac{\pi\delta^6}{64 }\dfrac{g\alpha}{\beta}\int_{0}^{\infty}\int_{0}^{\infty}\dfrac{ k_s^3}{k^2}e^{-k^2\delta^2/4} \ dk_s \ dk_z, \\
+&\approx \dfrac{\pi\delta^6}{64 }\dfrac{g\alpha}{\beta}\int_{0}^{\infty}k^2\ e^{-k^2\delta^2/4} \ dk \ \int_{0}^{\pi/2}\cos^3\theta  \ d\theta, \\
+&\approx \dfrac{\pi\delta^6}{64 }\dfrac{g\alpha}{\beta}\times \dfrac{2\sqrt{\pi}}{\delta^3} \times \dfrac{2}{3}, \\
+E_z&\approx \dfrac{\pi^{3/2}\delta^3}{48 }\dfrac{g\alpha}{\beta}. \numberthis \label{Ezconst}
+\end{align*}
+For $t\gtrsim \omega_A^2/\omega_\eta \omega_M^2$, the velocity field is
+\begin{align*}
+\hat{u}_z\approx k_s\omega_A  \exp\left(-\dfrac{\omega_\eta\omega_M^2t}{2\omega_A^2}\right) \dfrac{\hat{\theta}_0}{\beta k_s}.
+\end{align*}
+The energy content associated with this velocity field is
+\begin{align*}
+E_z&=16\pi^4\int_{0}^{\infty}\int_{0}^{\infty}|\hat{u}_z|^2 \ k_s \ dk_s \ dk_z,\\
+&\approx 16\pi^4\int_{0}^{\infty}\int_{0}^{\infty}k_s^2\omega_A^2\exp\left(-\dfrac{\omega_\eta\omega_M^2t}{\omega_A^2}\right) \dfrac{\hat{\theta}_0^2}{\beta^2k_s^2}\ k_s \ dk_s \ dk_z,\\
+&\approx \dfrac{\pi\delta^6}{64}\dfrac{g\alpha}{\beta}\int_{0}^{\infty}\int_{0}^{\infty}\dfrac{k_s^3}{k^2}\exp\left(-\dfrac{\eta V_A^2}{g\alpha\beta}\dfrac{k^4k_z^2}{k_s^2}t\right) e^{-k^2\delta^2/4} \ dk_s \ dk_z,\\
+\text{using}& \ k_s=k \cos\theta, \ k_z=k\sin\theta,\\
+&\approx \dfrac{\pi\delta^6}{64}\dfrac{g\alpha}{\beta}\int_{0}^{\infty}k^2 e^{-k^2\delta^2/4} \int_{0}^{\pi/2}\cos^3\theta\exp\left(-\dfrac{\eta V_A^2}{g\alpha\beta}k^4\tan^2\theta t\right)  \ d\theta \ dk,\\
+&\approx \dfrac{\pi\delta^6}{64}\dfrac{g\alpha}{\beta}\int_{0}^{\infty}k^2 e^{-k^2\delta^2/4} \left[\dfrac{1}{3} a e^{a/2} \left(a K_0\left(\dfrac{a}{2}\right)-(a-1) K_1\left(\dfrac{a}{2}\right)\right)\right] \ dk,\\
+\text{where}& \ a=\eta V_A^2k^4 t/g\alpha\beta.
+\end{align*}
+For $t\gg \omega_A^2/\omega_\eta\omega_M^2$, taking $a\rightarrow \infty$, 
+\begin{align*}
+\left[\dfrac{1}{3} a e^{a/2} \left(a K_0\left(\dfrac{a}{2}\right)-(a-1) K_1\left(\dfrac{a}{2}\right)\right)\right]\approx \dfrac{\sqrt{\pi }}{2} \sqrt{\dfrac{1}{a}}+O(a^{-3/2}).
+\end{align*}
+Hence the kinetic energy becomes
+\begin{align*}
+E_z&\approx \dfrac{\pi^{3/2}\delta^6}{128}\dfrac{g\alpha}{\beta}\int_{0}^{\infty}k^2 e^{-k^2\delta^2/4} \sqrt{\dfrac{g\alpha\beta}{\eta V_A^2k^4 t}} \ dk,\\
+&\approx \left(\dfrac{\eta V_A^2t}{g\alpha\beta}\right)^{-1/2}\dfrac{\pi^{3/2}\delta^6}{128}\dfrac{g\alpha}{\beta}\int_{0}^{\infty} e^{-k^2\delta^2/4}  \ dk,\\
+E_z&\approx \dfrac{\pi^{2}\delta^3}{128}\dfrac{g\alpha}{\beta}\left(\dfrac{t}{t_{u_z}}\right)^{-1/2}.
+\end{align*}
+\subsection{Magnetic energy}
+The three modes $\lambda_i: i=1,2,3$ takes the form
+\begin{align*}
+\lambda_1&\approx -\omega_A+\mathrm{i}\dfrac{\omega_\eta \omega_M^2}{2 \omega_A^2}, \ 
+\lambda_2\approx \omega_A+\mathrm{i}\dfrac{\omega_\eta \omega_M^2}{2 \omega_A^2},\ 
+\lambda_3\approx \mathrm{i}\omega_\eta
+\end{align*}
+\subsubsection{$\hat{\Phi}$ approximation}
+The $\hat{\Phi}$ expression from \eqref{flux_soln} is
+\begin{align*}
+\hat{\Phi}=Pe^{\mathrm{i}\lambda_1t}+Qe^{\mathrm{i}\lambda_2t}+Re^{\mathrm{i}\lambda_3t},
+\end{align*}
+where
+\begin{align*}
+P&=-\dfrac{b_3}{(\lambda_1-\lambda_2) (\lambda_1-\lambda_3)},\\
+Q&=-\dfrac{b_3}{(\lambda_2-\lambda_1) (\lambda_2-\lambda_3)},\\
+R&=-\dfrac{b_3}{(\lambda_3-\lambda_1) (\lambda_3-\lambda_2)},\\
+b_3&=\alpha g B_0 \mathrm{i} \dfrac{k_z k_s}{k^2} \hat{\theta}_0.
+\end{align*}
+Using approximate $\lambda_i$, these expressions become
+\begin{align*}
+P&\approx -\dfrac{b_3(\omega_A-\mathrm{i}\omega_\eta)}{2\omega_A^3},\\
+Q&\approx -\dfrac{b_3(\omega_A+\mathrm{i}\omega_\eta)}{2\omega_A^3},\\
+R&\approx \dfrac{b_3}{\omega_A^2}.
+\end{align*}
+Therefore,
+\begin{align*}
+\hat{\Phi}&\approx -b_3\left[\dfrac{(\omega_A-\mathrm{i}\omega_\eta)}{2\omega_A^3}e^{\mathrm{i}\lambda_1t}+\dfrac{(\omega_A+\mathrm{i}\omega_\eta)}{2\omega_A^3}e^{\mathrm{i}\lambda_2t}-\dfrac{1}{\omega_A^2}e^{\mathrm{i}\lambda_3t}\right],\\
+&\approx -\dfrac{b_3}{2\omega_A^2}\left[\left(1-\mathrm{i}\dfrac{\omega_\eta}{\omega_A}\right)e^{\mathrm{i}\omega_At}e^{-\omega_\eta\omega_M^2t/2\omega_A^2}+\left(1+\mathrm{i}\dfrac{\omega_\eta}{\omega_A}\right)e^{-\mathrm{i}\omega_At}e^{-\omega_\eta\omega_M^2t/2\omega_A^2}-2e^{-\omega_\eta t}\right],\\
+&\approx -\dfrac{b_3}{2\omega_A^2}\left[e^{-\omega_\eta\omega_M^2t/2\omega_A^2}\left(e^{\mathrm{i}\omega_At}+e^{-\mathrm{i}\omega_At}+\mathrm{i}\dfrac{\omega_\eta}{\omega_A}\left(e^{-\mathrm{i}\omega_At}-e^{\mathrm{i}\omega_At}\right)\right)-2e^{-\omega_\eta t}\right],\\
+\hat{\Phi}&\approx -\dfrac{b_3}{\omega_A^2}e^{-\omega_\eta\omega_M^2t/2\omega_A^2}\left(\cos (\omega_A t)+\dfrac{\omega_\eta}{\omega_A}\sin(\omega_A t)\right)+\dfrac{b_3}{\omega_A^2}e^{-\omega_\eta t}. \numberthis \label{Phiapprox}
+\end{align*}
+The poloidal magnetic field components are
+\begin{align*}
+\hat{b}_s=\mathrm{i}k_z\hat{\Phi}, \ \hat{b}_z=k_s\hat{\Phi}
+\end{align*}
+\section{Approximate energy estimates for $t_M\ll t_A\ll t_\eta$ case}
+\subsection{Kinetic energy}
+The approximate frequencies in this regime are
+\begin{align*}
+\lambda_1&\approx -\omega_M+\dfrac{\mathrm{i\omega_\eta}}{2},
+\lambda_2\approx \omega_M+\dfrac{\mathrm{i\omega_\eta}}{2},\lambda_3\approx \mathrm{i} \dfrac{\omega_\eta\omega_A^2}{\omega_M^2}
+\end{align*}
+For $\nu=\kappa=0$, $a_3=-\alpha g k_s(\nu+\kappa)\hat{\theta}_0=0, \ a_2=\dfrac{\alpha g k_s \hat{\theta}_0}{k^2}=\omega_A^2\dfrac{\hat{\theta}_0}{\beta k_s}$. 
+\subsubsection{$\hat{\psi}$ approximation}
+$$\hat{\psi}=Ae^{\mathrm{i}\lambda_1 t}+Be^{\mathrm{i}\lambda_2 t}+Ce^{\mathrm{i}\lambda_3 t},$$ where
+\begin{align*}
+A&=-\dfrac{a_3-i a_2 (\lambda_2+ \lambda_3)}{(\lambda_1-\lambda_2) (\lambda_1-\lambda_3)},\\
+B&=-\dfrac{a_3-i a_2 (\lambda_1+ \lambda_3)}{(\lambda_2-\lambda_1) (\lambda_2-\lambda_3)},\\
+C&=-\dfrac{a_3-i a_2 (\lambda_1+ \lambda_2)}{(\lambda_3-\lambda_1) (\lambda_3-\lambda_2)}.
+\end{align*}
+Now, using the approximate frequency estimates
+\begin{align*}
+A&\approx \mathrm{i}\dfrac{\omega_A^2}{2\omega_M}\left(1+\mathrm{i} \dfrac{\omega_\eta }{\omega_M}\right)\dfrac{\hat{\theta}_0}{\beta k_s},\\
+B&\approx -\mathrm{i}\dfrac{\omega_A^2}{2\omega_M}\left(1-\mathrm{i} \dfrac{\omega_\eta }{\omega_M}\right)\dfrac{\hat{\theta}_0}{\beta k_s},\\
+C&\approx \dfrac{\omega_\eta\omega_A^2}{\omega_M^2}\dfrac{\hat{\theta}_0}{\beta k_s}.
+\end{align*}
+Therefore,
+\begin{align*}
+\hat{\psi}&\approx \dfrac{\omega_A^2}{\omega_M}\dfrac{\hat{\theta}_0}{\beta k_s}e^{-\omega_\eta t/2}\left[\sin(\omega_M t)-\dfrac{\omega_\eta}{\omega_M}\cos(\omega_M t)\right]+\dfrac{\omega_\eta\omega_A^2}{\omega_M^2}\dfrac{\hat{\theta}_0}{\beta k_s}e^{-\omega_\eta\omega_A^2t/\omega_M^2},\\
+&\approx \dfrac{\omega_A^2}{\omega_M}\dfrac{\hat{\theta}_0}{\beta k_s}e^{-\omega_\eta t/2}\sin(\omega_M t)-\dfrac{\omega_\eta\omega_A^2}{\omega_M^2}\dfrac{\hat{\theta}_0}{\beta k_s}e^{-\omega_\eta t/2}\cos(\omega_M t)+\dfrac{\omega_\eta\omega_A^2}{\omega_M^2}\dfrac{\hat{\theta}_0}{\beta k_s}e^{-\omega_\eta\omega_A^2t/\omega_M^2},\\
+\hat{\psi}&\approx \dfrac{\omega_A^2}{\omega_M}\dfrac{\hat{\theta}_0}{\beta k_s}e^{-\omega_\eta t/2}\sin(\omega_M t)+\dfrac{\omega_\eta\omega_A^2}{\omega_M^2}\dfrac{\hat{\theta}_0}{\beta k_s}\left[e^{-\omega_\eta\omega_A^2t/\omega_M^2}-e^{-\omega_\eta t/2}\cos(\omega_M t)\right].\numberthis \label{psib}
+\end{align*}
+The velocity estimates are
+\begin{align*}
+\hat{u}_s&\approx -\mathrm{i}k_z\hat{\psi}, \
+\hat{u}_z\approx k_s \hat{\psi}.
+\end{align*}
+\subsubsection{$\hat{u}_s$ approximate energy estimates}
+The $\hat{u}_s$ velocity is
+\begin{align*}
+\hat{u}_s\approx -\mathrm{i}k_z\Biggl(\dfrac{\omega_A^2}{\omega_M}\dfrac{\hat{\theta}_0}{\beta k_s}e^{-\omega_\eta t/2}\sin(\omega_M t)+\dfrac{\omega_\eta\omega_A^2}{\omega_M^2}\dfrac{\hat{\theta}_0}{\beta k_s}\left[e^{-\omega_\eta\omega_A^2t/\omega_M^2}-e^{-\omega_\eta t/2}\cos(\omega_M t)\right]\Biggr).
+\end{align*}
+For $t\ll t_M$, the velocity is
+\begin{align*}
+\hat{u}_s&\approx -\mathrm{i}k_z\dfrac{\omega_A^2}{\omega_M}\dfrac{\hat{\theta}_0}{\beta k_s} \sin(\omega_M t),\\
+&\approx -\mathrm{i}\dfrac{g\alpha k_s}{V_A  k^2}\dfrac{\delta^3}{16\sqrt{2}\pi^{3/2}} e^{-k^2\delta^2/8}\sin(V_A k_z t),\\
+\end{align*}
+The kinetic energy associated with this velocity field is
+\begin{align*}
+E_s&=16\pi^4\int_{0}^{\infty}\int_{0}^{\infty}|\hat{u}_s|^2 \ k_s \ dk_s \ dk_z,\\
+&\approx 16\pi^4\int_{0}^{\infty}\int_{0}^{\infty}\left(\dfrac{g\alpha k_s }{V_A  k^2}\dfrac{\delta^3}{16\sqrt{2}\pi^{3/2}}e^{-k^2\delta^2/8} \sin(V_A k_z t)\right)^2 \ k_s \ dk_s \ dk_z,\\
+&\approx \dfrac{\pi \delta^6}{32}\dfrac{g^2\alpha^2}{V_A^2}\int_{0}^{\infty}\int_{0}^{\infty}\dfrac{ k_s^3 }{ k^4}e^{-k^2\delta^2/4} \sin^2(V_A k_z t)  \ dk_s \ dk_z,\\
+\text{Using}& \ k_s=k\cos\theta, \ k_z=k\sin\theta, \\
+&\approx \dfrac{\pi \delta^6}{32}\dfrac{g^2\alpha^2}{V_A^2}\int_{0}^{\infty}e^{-k^2\delta^2/4} \int_{0}^{\pi/2}\cos^3\theta  \sin^2(V_A k \sin\theta t) \ d\theta  \ dk ,\\
+&\approx \dfrac{\pi \delta^6}{768}\dfrac{g^2\alpha^2}{V_A^2}\int_{0}^{\infty}e^{-k^2\delta^2/4}  \left(\dfrac{6 k t V_A \cos (2 k t V_A)-3 \sin (2 k t V_A)}{k^3 t^3 V_A^3}+8\right)  \ dk ,\\
+&\approx \dfrac{\pi \delta^6}{768}\dfrac{g^2\alpha^2}{V_A^2} \dfrac{\sqrt{\pi } \left(\dfrac{3 \sqrt{\pi } \delta \left(\delta^2-8 t^2 V_A^2\right) \text{erf}\left(\dfrac{2 t V_A}{\delta}\right)}{t V_A}-12 \delta^2 e^{-\dfrac{4 t^2 V_A^2}{\delta^2}}+64 t^2 V_A^2\right)}{8 \delta t^2 V_A^2}
+\end{align*}
+For $t\gtrsim O(t_\eta)$, the velocity is
+\begin{align*}
+\hat{u}_s&\approx -\mathrm{i}k_z\dfrac{\omega_A^2}{\omega_M}\dfrac{\hat{\theta}_0}{\beta k_s} \ e^{-\omega_\eta t/2},\\
+&\approx -\mathrm{i}\dfrac{g\alpha k_s }{V_A  k^2}\dfrac{\delta^3}{16\sqrt{2}\pi^{3/2}}e^{-k^2\delta^2/8 -\eta k^2 t/2} .
+\end{align*}
+The kinetic energy associated with this velocity field is
+\begin{align*}
+E_s&=16\pi^4\int_{0}^{\infty}\int_{0}^{\infty}|\hat{u}_s|^2 \ k_s \ dk_s \ dk_z,\\
+&\approx 16\pi^4\int_{0}^{\infty}\int_{0}^{\infty}\left(\dfrac{g\alpha k_s }{V_A  k^2}\dfrac{\delta^3}{16\sqrt{2}\pi^{3/2}}e^{-k^2\delta^2/8-\eta k^2 t/2} \right)^2 \ k_s \ dk_s \ dk_z,\\
+&\approx \dfrac{g^2\alpha^2}{V_A^2}\dfrac{\pi\delta^6}{32 }\int_{0}^{\infty}\int_{0}^{\infty}\dfrac{ k_s^3 }{ k^4}e^{-k^2\delta^2/4-\eta k^2 t}   \ dk_s \ dk_z,\\
+\text{Using}& \ k_s=k\cos\theta, \ k_z=k\sin\theta, \\
+&\approx \dfrac{g^2\alpha^2}{V_A^2}\dfrac{\pi\delta^6}{32 }\int_{0}^{\infty}\ e^{-k^2\delta^2/4-\eta k^2 t}   \ dk \int_{0}^{\pi/2}\cos^3\theta \ d\theta,\\
+&\approx \dfrac{g^2\alpha^2}{V_A^2}\dfrac{\pi\delta^6}{32 }\times \dfrac{\sqrt{\pi}}{2}\left(\dfrac{\delta^2}{4}+\eta t\right)^{-1/2}\times \dfrac{2}{3},\\
+&\approx \dfrac{g^2\alpha^2}{V_A^2}\dfrac{\pi^{3/2}\delta^5}{48}\left(1+\dfrac{4\eta t}{\delta^2}\right)^{-1/2},\\
+\text{For}& \ t\gg t_\eta,\\
+E_{s}&\approx \dfrac{\pi^{3/2}\delta^5}{96}\dfrac{g^2\alpha^2}{V_A^2}\left(\dfrac{ t}{t_\eta}\right)^{-1/2}.
+\end{align*}
+\subsubsection{$\hat{u}_z$ approximate energy estimates}
+The $\hat{u}_z$ velocity is
+\begin{align*}
+\hat{u}_z\approx k_s\Biggl(\dfrac{\omega_A^2}{\omega_M}\dfrac{\hat{\theta}_0}{\beta k_s}e^{-\omega_\eta t/2}\sin(\omega_M t)+\dfrac{\omega_\eta\omega_A^2}{\omega_M^2}\dfrac{\hat{\theta}_0}{\beta k_s}\left[e^{-\omega_\eta\omega_A^2t/\omega_M^2}-e^{-\omega_\eta t/2}\cos(\omega_M t)\right]\Biggr).
+\end{align*}
+For $t\ll t_M$, the velocity is
+\begin{align*}
+\hat{u}_z&\approx k_s\dfrac{\omega_A^2}{\omega_M}\dfrac{\hat{\theta}_0}{\beta k_s} \sin(\omega_M t),\\
+&\approx \dfrac{g\alpha k_s^2}{V_A k_zk^2}\dfrac{\delta^3}{16\sqrt{2}\pi^{3/2}}e^{-k^2\delta^2/8} \sin(V_A k_z t).
+\end{align*}
+The kinetic energy associated with this velocity field is
+\begin{align*}
+E_z&=16\pi^4\int_{0}^{\infty}\int_{0}^{\infty}|\hat{u}_z|^2 \ k_s \ dk_s \ dk_z,\\
+&\approx 16\pi^4\int_{0}^{\infty}\int_{0}^{\infty}\left(\dfrac{g\alpha k_s^2}{V_A k_zk^2}\dfrac{\delta^3}{16\sqrt{2}\pi^{3/2}}e^{-k^2\delta^2/8} \sin(V_A k_z t)\right)^2 \ k_s \ dk_s \ dk_z,\\
+&\approx \dfrac{\pi \delta^6}{32}\dfrac{g^2\alpha^2}{V_A^2}\int_{0}^{\infty}\int_{0}^{\infty}\dfrac{ k_s^5 }{ k_z^2k^4}e^{-k^2\delta^2/4} \sin^2(V_A k_z t)  \ dk_s \ dk_z,\\
+\text{Using}& \ k_s=k\cos\theta, \ k_z=k\sin\theta, \\
+&\approx \dfrac{\pi \delta^6}{32}\dfrac{g^2\alpha^2}{V_A^2}\int_{0}^{\infty}e^{-k^2\delta^2/4} \int_{0}^{\pi/2}\dfrac{\cos^5\theta}{\sin^2\theta}  \sin^2(V_A k \sin\theta t) \ d\theta  \ dk ,\\
+&\approx \dfrac{\pi \delta^6}{768}\dfrac{g^2\alpha^2}{V_A^2}\int_{0}^{\infty}\dfrac{e^{-k^2\delta^2/4}}{24 k^3 t^3 V_A^3}  \Biggl(8 k^3 t^3 V_A^3 (3 k t V_A \text{Si}(2 k t V_A)-4)+3 \left(2 k^2 t^2 V_A^2+1\right) \sin (2 k t V_A)\\
+&\mspace{200mu} +6 k t V_A \left(2 k^2 t^2 V_A^2-1\right) \cos (2 k t V_A)\Biggr)  \ dk ,\\
+E_z&\approx \dfrac{\pi \delta^6}{768}\dfrac{g^2\alpha^2}{V_A^2} \Biggl(\dfrac{\sqrt{\pi }}{48 \delta^2}\left(48 \sqrt{\pi } t V_A \text{erf}\left(\dfrac{2 t  V_A }{\delta}\right)+\delta \left(e^{-4 t^2 V_A^2/\delta^2} \left(\dfrac{3 \delta^2}{t^2 V_A^2}+24\right)-64\right)\right)\\
+&\mspace{100mu} -\dfrac{\pi  \left(\delta^2-16 t^2 V_A^2\right) \text{erf}\left(\dfrac{2 t  V_A }{\delta}\right)}{64 t^2 V_A^2 t  V_A }\Biggr).
+\end{align*}
+For $t\gtrsim O(t_\eta)$, the velocity is
+\begin{align*}
+\hat{u}_z&\approx k_s\dfrac{\omega_A^2}{\omega_M}\dfrac{\hat{\theta}_0}{\beta k_s} \ e^{-\omega_\eta t/2}\sin(\omega_Mt),\\
+&\approx \dfrac{g\alpha k_s^2 }{V_A k_z k^2}\dfrac{\delta^3}{16\sqrt{2}\pi^{3/2}}e^{-k^2\delta^2/8 -\eta k^2 t/2} \sin(V_A k_z t).
+\end{align*}
+The kinetic energy associated with this velocity field is
+\begin{align*}
+E_z&=16\pi^4\int_{0}^{\infty}\int_{0}^{\infty}|\hat{u}_z|^2 \ k_s \ dk_s \ dk_z,\\
+&\approx 16\pi^4\int_{0}^{\infty}\int_{0}^{\infty}\left(\dfrac{g\alpha k_s^2 }{V_A k_z k^2}\dfrac{\delta^3}{16\sqrt{2}\pi^{3/2}}e^{-k^2\delta^2/8 -\eta k^2 t/2}\sin(V_A k_z t)\right)^2 \ k_s \ dk_s \ dk_z,\\
+&\approx \dfrac{g^2\alpha^2}{V_A^2}\dfrac{\pi\delta^6}{32 }\int_{0}^{\infty}\int_{0}^{\infty}\dfrac{ k_s^5 }{ k_z^2k^4}e^{-k^2\delta^2/4-\eta k^2 t} \sin^2(V_Ak_z t)  \ dk_s \ dk_z,\\
+\text{Using}& \ k_s=k\cos\theta, \ k_z=k\sin\theta, \\
+&\approx \dfrac{g^2\alpha^2}{V_A^2}\dfrac{\pi\delta^6}{32 }\int_{0}^{\infty}\ e^{-k^2\delta^2/4-\eta k^2 t}    \int_{0}^{\pi/2}\dfrac{\cos^5\theta}{\sin^2\theta} \sin^2(V_Ak\sin\theta t)\ d\theta \ dk,\\
+&\approx \dfrac{\pi \delta^6}{768}\dfrac{g^2\alpha^2}{V_A^2}\int_{0}^{\infty}\dfrac{e^{-k^2\delta^2/4-\eta k^2 t}}{24 k^3 t^3 V_A^3}  \Biggl(8 k^3 t^3 V_A^3 (3 k t V_A \text{Si}(2 k t V_A)-4)+3 \left(2 k^2 t^2 V_A^2+1\right) \sin (2 k t V_A)\\
+&\mspace{200mu} +6 k t V_A \left(2 k^2 t^2 V_A^2-1\right) \cos (2 k t V_A)\Biggr)  \ dk ,\\
+E_z&\approx \frac{e^{-\frac{4 t^2 V_A^2}{\delta^2+4 \eta t}}}{192 t^3 V_A^3 \left(\delta^2+4 \eta t\right)} \Biggl(4 \sqrt{\pi } t  V_A  \biggl(48 \sqrt{\pi } t^3 V_A^3 e^{\frac{4 t^2 V_A^2}{\delta^2+4 \eta t}} \text{erf}\left(\frac{2 t  V_A }{\sqrt{\delta^2+4 \eta t}}\right)\\
+&\mspace{200mu}+\sqrt{\delta^2+4 \eta t} \left(4 t \left(3 \eta-2 t V_A^2 \left(8 e^{\frac{4 t^2 V_A^2}{\delta^2+4 \eta t}}-3\right)\right)+3 \delta^2\right)\biggr)\\
+&\mspace{200mu}-3 \pi  \left(\delta^2+4 \eta t\right) e^{\frac{4 t^2 V_A^2}{\delta^2+4 \eta t}} \left(\delta^2+4 t \left(\eta-4 t V_A^2\right)\right) \text{erf}\left(\frac{2 t  V_A }{\sqrt{\delta^2+4 \eta t}}\right)\Biggr).
+\end{align*}
+\end{document}
+
+

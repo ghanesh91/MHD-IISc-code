@@ -1,0 +1,15 @@
+Vadefinitions
+
+wO=2*\Omega*kz/k
+
+weA=eta*Va^2*k^4 /4\Omega^2
+
+we=eta*k^2
+
+wV=Va*kz
+
+wA=Va^2*kz*k/2\Omega
+
+wB=B*kz
+
+wOV=\Omega*eta*k/2/V_A

@@ -1,0 +1,211 @@
+import cython
+import numpy as np
+from numpy.lib.scimath import sqrt as csqrt
+from mpi4py import MPI
+from scipy import integrate
+from scipy.special import jn
+from scipy import io
+from array import array
+import h5py
+import sys
+
+comm = MPI.COMM_WORLD
+rank = comm.Get_rank()
+size = comm.Get_size()
+
+Npt_kr=2e3
+Npt_kz=2e3
+
+nprocr=8
+nprocz=int(size/nprocr)
+
+if rank==0:print('np_z',nprocz,'np_s',nprocr)
+
+nproc=size #number of processes
+beta=1;
+if beta==0:
+   d=0.25000;Rm=0.01;S=1e4;eta=1;P=1e3;
+   mu=4*np.pi*1e-7;rho=1000;murho=csqrt(mu*rho);g=9.8;
+   td=d**2/eta;B0=murho*d*S/td;Va=B0/murho;
+   tM=d/Va;to=td/Rm;
+   nu=0;tnu=np.inf;
+   tA=np.inf;
+   kappa=eta/P;
+   tka=d**2/kappa;
+   alpha=1;
+   
+if beta==1:
+   d=0.25000;Rm=0.01;S=2e3;Q=1e-2;P=1e3;
+   mu=4*np.pi*1e-7;rho=1000;murho=csqrt(mu*rho);g=9.8;
+   alpha=1;tA=1/csqrt(g*alpha*(beta));
+   eta=d**2/(Q*S*tA);kappa=eta/P;
+   td=d**2/eta;B0=murho*d*S/td;Va=B0/murho;
+   tM=d/Va;to=td/Rm;
+   tka=d**2/kappa;
+   nu=0;tnu=np.inf;
+
+if rank==0:print('tA',tA)
+"""************************************************************************************************************************************ """
+def distribute(kz,procs,chunks):
+   """Creating "procss" number of empty chunks for storing the kz values that is to be divided across procss. """
+   
+   for i in range(procs):    
+      actual=np.size(kz);extra=procs-1
+      if i==(procs-1):
+         m=actual+extra - (procs-1)*int(actual/procs);                
+         m2=actual-1;m1=m2-m+1;
+             
+      else:
+         m=int(np.size(kz)/procs)
+         m1=(int(actual/procs)-1)*i;
+         m2=m+m1-1;
+                  
+      for j in range(int(m1),int(m2+1)):
+         chunks[i].append(kz[j])     
+   return chunks     
+"""************************************************************************************************************************************"""       
+def universal_parameters(ks,kz):
+   [KS,KZ]=np.meshgrid(ks,kz);
+   K=(csqrt(KS**2+KZ**2));
+   thetahat0=(d**3/16/csqrt(2)/np.pi**1.5)*np.exp(-K**2*d**2/8);
+   omgM   = Va*KZ;
+   omgnu  = nu*K**2;
+   omgeta = eta*K**2;
+   omgka  = kappa*K**2;
+   omgA   = csqrt(g*alpha*beta*(KS/K)**2);
+   
+   L= 9*omgA**2*(2*omgeta-4*omgka-omgnu)+2*omgeta**3-3*omgeta**2*(omgka+omgnu)-3*omgeta*(omgka**2-4*omgka*omgnu+3*omgM**2+omgnu**2)+(omgka+omgnu)*(2 *omgka**2-5*omgka*omgnu-9*omgM**2+2*omgnu**2);
+   M= 3*(omgA**2+omgeta*(omgka+omgnu)+omgka*omgnu+omgM**2)-(omgeta+omgka+omgnu)**2;
+
+   l1 = -(csqrt(-1)/12)*(2**(2/3)*(1-csqrt(-1)*csqrt(3))*(csqrt(L**2+4*M**3)+L)**(1/3)-((2*csqrt(-1)*(2)**(1/3)*(csqrt(3)-csqrt(-1))*M)/((csqrt(L**2+4*M**3)+L)**(1/3)))-4*(omgeta+omgka+omgnu));
+   l2 = -(csqrt(-1)/12)*(2**(2/3)*(1+csqrt(-1)*csqrt(3))*(csqrt(L**2+4*M**3)+L)**(1/3)+((2*csqrt(-1)*(2)**(1/3)*(csqrt(3)+csqrt(-1))*M)/((csqrt(L**2+4*M**3)+L)**(1/3)))-4*(omgeta+omgka+omgnu));
+   l3 = (csqrt(-1)/6)*(2**(2/3)*(csqrt(L**2+4*M**3)+L)**(1/3)-((2*(2)**(1/3)*M)/((csqrt(L**2+4*M**3)+L)**(1/3)))+2*(omgeta+omgka+omgnu));
+   return KS,KZ,K,l1,l2,l3,thetahat0
+
+"""************************************************************************************************************************************ """
+def u_hat_pol(KS,KZ,K,l1,l2,l3,thetahat0,t):
+   a1=0;
+   a2= g*alpha*KS*thetahat0/K**2;
+   a3=-g*alpha*KS*(nu+kappa)*thetahat0;
+   
+   A=-(a3-csqrt(-1)*a2*(l2+l3))/((l1-l2)*(l1-l3))
+   
+   B=-(a3-csqrt(-1)*a2*(l1+l3))/((l2-l1)*(l2-l3))
+   
+   C=-(a3-csqrt(-1)*a2*(l1+l2))/((l3-l1)*(l3-l2))
+   
+   psihat = A*np.exp(csqrt(-1)*l1*t) + B*np.exp(csqrt(-1)*l2*t)+ C*np.exp(csqrt(-1)*l3*t);
+   psihatA=A*np.exp(csqrt(-1)*l1*t);
+   psihatB=B*np.exp(csqrt(-1)*l2*t);
+   psihatC=C*np.exp(csqrt(-1)*l3*t);
+   
+   uhats  = -csqrt(-1)*KZ*psihat
+   uhatz  = KS*psihat
+   uhatsA = -csqrt(-1)*KZ*psihatA
+   uhatzA = KS*psihatA
+   uhatsB = -csqrt(-1)*KZ*psihatB
+   uhatzB = KS*psihatB
+   uhatsC = -csqrt(-1)*KZ*psihatC
+   uhatzC = KS*psihatC
+   return uhats,uhatz,uhatsA,uhatzA,uhatsB,uhatzB,uhatsC,uhatzC,psihat
+"""************************************************************************************************************************************"""
+def inverse(uhat,kr,kz,r,z,name): 
+   Nr=np.size(r)
+   Nz=np.size(z)
+   Nkr=np.size(kr)
+   Nkz=np.size(kz)
+   I=np.zeros((Nkr,Nz), np.complex128);
+   u=np.zeros((Nr,Nz), np.complex128);
+   if rank==0:print('ir',r)
+   if name=='us' or 'psi':order=1
+   if name=='uz':order=0
+   for i in range(Nkr):
+      if rank==0:print('kr',i,kr[i])
+      for j in range(Nz):
+          I[i,j]=np.trapz(uhat[:,i]*np.exp(csqrt(-1)*np.multiply(kz,z[j])),kz);
+          
+   
+   for i in range(Nr):
+      if rank==0:print('r',i,r[i])
+      for j in range(Nz):
+         u[i,j]=4*np.pi*r[i]*np.trapz(kr*jn(order,np.multiply(kr,r[i]))*I[:,j],kr);
+   return u      
+"""************************************************************************************************************************************ """         
+if __name__=='__main__':
+    
+   t=2000*tM
+   rank_pos=np.zeros((nproc,2),dtype=np.float64)       
+   if rank==0:
+                      
+       for i in range(nprocr):
+          for j in range(nprocz):
+             m = (i+j)+(i*(nprocz-1))
+             rank_pos[m,0]=i
+             rank_pos[m,1]=j
+      
+      
+   comm.Bcast(rank_pos,root=0)
+   print('rank',rank,rank_pos[rank])      
+   Lz=5*10**10*.25;Lr=100
+   kr=np.linspace(1e-5,25,num=Npt_kr)
+   kz=np.linspace(1e-5,1.5,num=Npt_kz);  
+   
+   rlima=0;rlimb=25;zlima=1000;zlimb=2200;
+   r=np.linspace(rlima*d,rlimb*d,num=((rlimb-rlima)*d)/0.01)
+   z=np.linspace((zlima)*d,(zlimb)*d,num=((zlimb-zlima)*d)/0.025)
+   
+   """Distributing kz and kr"""
+       
+   rchunks = [[] for _ in range(nprocr)]
+   chunks_r= distribute(r,nprocr,rchunks)
+       
+   zchunks = [[] for _ in range(nprocz)]
+   chunks_z= distribute(z,nprocz,zchunks)
+   
+   for i in range(nprocr):
+       for j in range(nprocz):
+             m = (i+j)+(i*(nprocz-1))
+             if rank==m:
+                r_data=chunks_r[i]
+                z_data=chunks_z[j]
+   print('rank',rank,'r_shape',np.shape(r_data))
+   [KS,KZ,K,l1,l2,l3,thetahat0]=universal_parameters(kr,kz)
+   
+   [uhats,uhatz,uhatsA,uhatzA,uhatsB,uhatzB,uhatsC,uhatzC,psihat]=u_hat_pol(KS,KZ,K,l1,l2,l3,thetahat0,t)
+   if rank==0:print("Inverse transform")
+   u=inverse(uhatz,kr,kz,r_data,z_data,'uz')
+   
+   u_gathered=comm.gather(u,root=0)
+   r_gathered=comm.gather(r_data,root=0)
+   z_gathered=comm.gather(z_data,root=0)
+   if rank==0:
+      print("Gathering data")
+      print(rank,np.shape(u_gathered[0]),np.shape(r_gathered),np.shape(z_gathered))
+      num_r=0;num_z=0;j=0;p=0;
+      f=h5py.File('uz_S2e3_Q1e-2_P1e3_2000tM_z1000_z2100.h5','w')
+      u_theta=f.create_dataset('uz',(np.size(r),np.size(z)),dtype=np.float64)
+      uhts=f.create_dataset('uhats',(np.size(kz),np.size(kr)),dtype=np.complex128) 
+      uhtz=f.create_dataset('uhatz',(np.size(kz),np.size(kr)),dtype=np.complex128) 
+      r1=f.create_dataset('r',(np.size(r),1),dtype=np.float64)
+      z1=f.create_dataset('z',(np.size(z),1),dtype=np.float64)
+      kr1=f.create_dataset('kr',(np.size(kr),1),dtype=np.float64)
+      kz1=f.create_dataset('kz',(np.size(kz),1),dtype=np.float64)
+      
+      r1[0:np.size(r),0]=r[0:np.size(r)]
+      kr1[0:np.size(kr),0]=kr[0:np.size(kr)]
+      kz1[0:np.size(kz),0]=kz[0:np.size(kz)]
+      z1[0:np.size(z),0]=z[0:np.size(z)]
+      uhts[0:np.size(kz),0:np.size(kr)]=(uhats[0:np.size(kz),0:np.size(kr)])
+      uhtz[0:np.size(kz),0:np.size(kr)]=(uhatz[0:np.size(kz),0:np.size(kr)])
+      for i in range(nproc):
+         print('proc',i)
+         for j in range(np.size(r_gathered[i])-1):
+            for k in range(np.size(z_gathered[i])-1):
+               u_theta[j + rank_pos[i,0]*(np.size(r_gathered[0])-1) , k + rank_pos[i,1]*(np.size(z_gathered[0])-1) ]=np.real(u_gathered[i][j][k])
+              
+      f.close()
+      print("end")
+   
+      
+   
+   
